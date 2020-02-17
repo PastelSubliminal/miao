@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter点赞动画</title>
+    <style>
+        input{
+            display: none;
+        }
+
+        input + label{
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            border: 1px solid;
+            background-position: 0 0px;
+            background-image: url(https://miro.medium.com/max/2900/1*MTZW1G1mE7LSX1CnhTYeHA.png);
+            xtransition: none;
+        }
+
+        input:checked + label{
+            background-position: -2800px 0;
+            transition: .4666666s steps(28);
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" name="" id="up">
+<label for="up"></label>
+</body>
+</html>
