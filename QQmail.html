@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三种方式实现QQ邮箱三栏布局</title>
+    <style class="methoda">
+        html, body{
+            margin: 0px;
+            height: 100%;
+        }
+
+        div{
+            font-size: 0px;
+            height: 100%;
+        }
+
+        div * {
+            font-size: 16px;
+        }
+
+        header{
+            display: inline-block;
+            height: 100px;
+            width: 100%;
+            background-color: lime;
+        }
+
+        aside{
+            background-color: violet;
+            width: 200px;
+            display: inline-block;
+            height: calc(100% - 100px);
+            vertical-align: top;
+        }
+
+        section{
+            box-shadow: 0 0 0px 1px black;
+            display: inline-block;
+            margin-left: -200px;
+            width: 100%;
+            height: calc(100% - 100px);
+            position: relative;
+            z-index: -1;
+            vertical-align: top;
+        }
+
+        main{
+            background-color: red;
+            margin-left: 200px;
+            xdisplay: inline-block;
+            height: 100%;
+            background-color: aqua;
+            font-size: 100px
+        }
+    </style>
+    <style class="methodb">
+        html, body{
+            margin: 0;
+            height: 100%;
+        }
+
+        div{
+            height: 100%;
+            font-size: 0;
+        }
+
+        div > *{
+            font-size: 16px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        header{
+            height: 100px;
+            width: 100%;
+            background-color: red;
+        }
+
+        aside, main{
+            height: calc(100% - 100px);
+        }
+
+        aside{
+            width: 150px;
+            background-color: lime;
+        }
+
+        main{
+            width: calc(100% - 150px);
+            background-color: aqua;
+            font-size: 80px;
+        }
+    </style>
+    <style class="methodc">
+        html, body{
+            margin: 0px;
+            height: 100%;
+        }
+
+        header{
+            height: 100px;
+            width: 100%;
+            background-color: red;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        aside{
+            background-color: lime;
+            position: fixed;
+            top: 100px;
+            bottom: 0;
+            width: 150px;
+            font-size: 50px;
+        }
+
+        main{
+            background-color: aqua;
+            position: fixed;
+            top: 100px;
+            bottom: 0;
+            left: 150px;
+            right: 0;
+            font-size: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <header>aaa</header>
+        <aside>bbb</aside>
+        <section>
+          <main>ccc</main>
+        </section>
+    </div>
+</body>
+</html>
