@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css实现vscode导航栏级联菜单</title>
+    <style>
+        ul{
+            list-style: none;
+            padding: 0;
+            color: white;
+        }
+
+        ul li{/* 第一层ul */
+            position: relative;
+            white-space: nowrap;
+            background-color: #3c3c3c;
+        }
+
+        ul.menu > li{
+            display: inline-block;
+            padding: 10px;
+        }
+
+        ul.menu ul li{
+            padding: 10px 29px;
+        }
+
+        ul.menu ul li:hover{
+            background-color: #094771;
+        }
+
+        ul ul{
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+        }/* 选中了二层以上的ul */
+
+        ul ul ul{
+            top: 0%;
+            left: 100%;
+        }/* 选中了三层以上的ul */
+
+        li:hover > ul{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <ul class="menu">
+        <li>文件(F)
+          <ul>
+            <li>新建文件</li>
+            <li>新建窗口</li>
+            <li>打开文件...</li>
+            <li>打开文件夹...</li>
+            <li>打开最近的文件
+              <ul>
+            <li>撤销</li>
+            <li>恢复</li>
+            <li>剪切
+                <ul>
+            <li>保存</li>
+            <li>另存为</li>
+            <li>退出</li>
+              </ul>
+            </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>编辑(E)
+          <ul>
+            <li>撤销</li>
+            <li>恢复</li>
+            <li>剪切</li>
+          </ul>
+        </li>
+        <li>选择(S)
+          <ul>
+            <li>全选</li>
+            <li>展开选定内容</li>
+            <li>缩小选定范围</li>
+          </ul>
+        </li>
+      </ul>
+</body>
+</html>
