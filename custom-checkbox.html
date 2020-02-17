@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input {
+            display: none;
+        }
+
+        input + label {
+            border: 1px solid;
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+        }
+
+        input:checked + label::before {
+            content: '✓'
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" name="" id="up">
+    <label for="up"></label>
+</body>
+</html>
