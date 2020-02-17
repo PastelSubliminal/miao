@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>块布局</title>
+    <style>
+        body{
+            margin: 0px;
+        }
+
+        nav{
+            background-color: black;
+            color: white;
+            padding-left: calc(50% - 300px);
+            min-width: 600px;
+        }
+
+        .warp{
+            width: 600px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header{
+            background-color: black;
+            color: white;
+        }
+
+        header div{
+            xtext-align: center;/*1*/
+            width: 600px;
+            margin: auto;
+            background-color: red;
+        }
+
+        ul.cards{
+            margin: 0px;
+            padding: 0px;
+            list-style:none;
+        }
+
+        ul.cards li{
+            box-sizing: border-box;
+            width: 180px;
+            height: 40px;
+            border: 3px solid;
+            background-color: pink;
+            margin-bottom: 15px;
+            text-align: center;
+            line-height: 34px;
+        }
+
+        ul.cards li:nth-child(n + 5){
+            margin-left: 210px;
+        }
+
+        ul.cards li:nth-child(n + 9){
+            margin-left: 420px;
+        }
+
+        ul.cards li:nth-child(4n + 5){
+        margin-top: -220px;
+        }
+
+        .cards2{
+            padding: 0;
+            list-style: none;
+            font-size: 0;
+            box-shadow: 0 0 3px;
+            margin-left: -15px;
+            margin-right: -15px;
+            xmargin: -15px;
+        }
+
+        .cards2 li{
+            background-color: pink;
+            display: inline-block;
+            box-sizing: border-box;
+            width: 180px;
+            height: 40px;
+            border: 3px solid;
+            margin: 7px 15px;
+            vertical-align: ;
+        }
+
+        .cards2 li:nth-child(3n+3){
+        xmargin-right: 0;
+        }
+
+        ul.links{
+            padding: 0;
+            list-style: none;
+        }
+
+        ul.links li{
+            border-bottom: 1px dotted;
+        }
+
+        ul.links li:last-child{
+            border-bottom: none;
+        }
+
+        footer{
+            text-align: center;
+            background-color: violet;
+        }
+    </style>
+</head>
+<body>
+    <nav>hello world 请调整浏览器窗口大小查看效果</nav>
+<header>
+  <div>hello world 请调整浏览器窗口大小查看效果</div>
+</header>
+<div class="warp">
+  <p>页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px </p>
+  <ul class="cards">
+    <li>qwq</li>
+    <li>qwq</li>
+    <li>qwq</li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <ul class="cards2">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <ul class="links">
+    <li>link</li>
+    <li>link</li>
+    <li>link</li>
+    <li>link</li>
+    <li>link</li>
+  </ul>
+</div>
+<footer>
+  ©版权所有<br>
+  本页所有布局均使用块元素
+</footer>
+</body>
+</html>
