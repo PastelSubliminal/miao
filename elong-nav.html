@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>艺龙首页导航栏的伪元素</title>
+    <style>
+        .wrap {
+            background-color: #2064c8;
+            color: white;
+        }
+
+        nav {
+            width: 600px;
+            margin: auto;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            font-size: 0;
+        }
+
+        li {
+            position: relative;
+            font-size: 12px;
+            display: inline-block;
+            padding: 10px;
+            border-left: 1px solid #3774ce;
+        }
+
+        li:last-child {
+            border-right: 1px solid #3774ce;
+        }
+/*
+伪元素：
+相当于所属元素的第一个和最后一个子元素，所以替换元素一般没有伪元素。
+通过xxx::before,xxx::after选中
+通过content属性激活：content属性可以写字符串，可以写attr(href)使其取父元素的属性值。
+伪元素选择器与普通选择器不需要对比优先级，因为选中的一定不是相同的元素。
+伪元素无法交互，如hover，只能在父元素发生css交互时切换对应伪元素的样式。
+*/
+        li[data-tip]:hover::before {
+            background-color: red;
+        }
+
+        li[data-tip]::before {
+            xcolor: red;
+            content: attr(data-tip);
+            position: absolute;
+            z-index: 10;
+            background-color: #FF8E00;
+            font-size: 8px;
+            left: 40px;
+            bottom: 30px;
+            white-space: pre;
+            padding: 2px;
+        }
+
+        li[data-tip]::after {
+            content: '';
+            position: absolute;
+            z-index: 10;
+            xbackground-color: #FF8E00;
+            border: 2px solid #FF8E00;
+            border-color: #FF8E00 transparent transparent #FF8E00;
+            left: 42px;
+            bottom: 26px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <nav>
+          <ul>
+            <li>首页</li>
+            <li data-tip="低价促">海外酒店</li>
+            <li>火车票</li>
+            <li data-tip="新升级">汽车票</li>
+          </ul>
+        </nav>
+      </div>
+</body>
+</html>
