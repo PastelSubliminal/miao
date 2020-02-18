@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css-slider</title>
+    <style>
+        *{
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        div{
+            border: 5px solid red;
+            position: relative;
+            width: 500px;
+            height: 666px;
+            overflow: hidden;
+            margin: auto;
+        }
+        section{
+            width: 2000px;
+            font-size: 0;
+            top: 0;
+            left: 0;
+            position: absolute;
+            transition: .5s
+        }
+
+        [a]{
+            top: 0;
+        }
+
+        [b]{
+            top: 50%;
+        }
+
+        img{
+            xdisplay: none;
+            xposition: absolute;
+            xleft: 0%;
+            xtop: 0;
+            xtransition: 1s;
+            xopacity: 0
+        }
+
+        input{
+            position: relative;
+            top: calc(100% - 20px);
+            z-index: 10;
+        }
+        #a:checked ~ section{
+            left: 0%;
+        }
+        #b:checked ~ section{
+            left: -100%;
+        }
+        #c:checked ~ section{
+            left: -200%;
+        }
+        #d:checked ~ section{
+            left: -300%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="radio" name="slider" checked id="a">
+        <input type="radio" name="slider" id="b">
+        <input type="radio" name="slider" id="c">
+        <input type="radio" name="slider" id="d">
+        <section a>
+          <img src="https://xieranmaya.github.io/images/cats/stock-photo-132118343.jpg" alt="">
+        <img src="https://xieranmaya.github.io/images/cats/stock-photo-148928293.jpg" alt="">
+        <img src="https://xieranmaya.github.io/images/cats/stock-photo-21951271.jpg" alt="">
+        <img src="https://xieranmaya.github.io/images/cats/stock-photo-138436811.jpg" alt="">
+        </section>
+
+          <section b>
+          <img src="https://xieranmaya.github.io/images/cats/stock-photo-132118343.jpg" alt="">
+        <img src="https://xieranmaya.github.io/images/cats/stock-photo-148928293.jpg" alt="">
+        <img src="https://xieranmaya.github.io/images/cats/stock-photo-21951271.jpg" alt="">
+        <img src="https://xieranmaya.github.io/images/cats/stock-photo-138436811.jpg" alt="">
+        </section>
+
+      </div>
+</body>
+</html>
