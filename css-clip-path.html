@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css-clip-path</title>
+    <style>
+    * {
+        background-color: rgba(0,0,0,0.1);
+    }
+
+    body {
+        margin: 0;
+    }
+
+    div ul {
+        position: fixed;
+        list-style: none;
+        padding: 0;
+        width: 80px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        height: 100px;
+    }
+    div ul li {
+        height: 20px;
+    }
+
+    div {
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+        xclip: rect(0, auto, auto, 0);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+
+    .a1 {
+        background-color: pink;
+    }
+
+    .a1 ul {
+        background-color: gold;
+    }
+
+    .a2 {
+        background-color: lime;
+    }
+
+    .a2 ul {
+        background-color: tan;
+    }
+
+    .a3 {
+        background-color: violet;
+    }
+
+    .a3 ul {
+        background-color: aqua;
+    }
+
+    .a4 {
+        background-color: gold;
+    }
+
+    .a4 ul {
+        background-color: blue;
+    }
+
+    .a5 {
+        background-color: magenta;
+    }
+
+    .a5 ul {
+        background-color: olive;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="a1">
+        <ul>
+            <li>a1</li>
+            <li>a2</li>
+            <li>a3</li>
+            <li>a4</li>
+            <li>a5</li>
+        </ul>
+    </div>
+    <div class="a2">
+        <ul>
+            <li>a1</li>
+            <li>a2</li>
+            <li>a3</li>
+            <li>a4</li>
+            <li>a5</li>
+        </ul>
+    </div>
+    <div class="a3">
+        <ul>
+            <li>a1</li>
+            <li>a2</li>
+            <li>a3</li>
+            <li>a4</li>
+            <li>a5</li>
+        </ul>
+    </div>
+    <div class="a4">
+        <ul>
+            <li>a1</li>
+            <li>a2</li>
+            <li>a3</li>
+            <li>a4</li>
+            <li>a5</li>
+  </ul></div>
+  <div class="a5">
+        <ul>
+            <li>a1</li>
+            <li>a2</li>
+            <li>a3</li>
+            <li>a4</li>
+            <li>a5</li>
+        </ul>
+</div>
+</body>
+</html>
