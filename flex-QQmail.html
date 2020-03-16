@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body, html{
+            margin: 0;
+            height: 100%;
+        }
+        div{
+            display: flex;
+            flex-flow: column;
+            height: 100%;
+        }
+        header{
+            height: 100px;
+            background-color: red;
+        }
+        main{
+            flex-grow: 1;
+            display: flex;
+        }
+        aside{
+            width: 150px;
+            background-color: lightgreen;
+        }
+        section{
+            flex-grow: 1;
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <header>header</header>
+        <main>
+            <aside>aside</aside>
+            <aside>section</aside>
+        </main>
+    </div>
+</body>
+</html>

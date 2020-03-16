@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        dt{
+            width: 50px;
+            text-align: right;
+
+        }
+        dt:not(:first-child){
+            margin-top: -21px;
+        }
+        dt::after{
+            content: ":"
+        }
+        dd{
+            display: inline-block;
+            margin-left: 0;
+            margin-top: -21px;
+            vertical-align: top;
+        }
+        dd::after{
+            content: ","
+        }
+        dt + dd{
+            margin-left: 50px;
+        }
+        dl::after{
+            content: "a";
+            font-size: 0;
+            display: block;
+            margin-top: -21px;
+            line-height: 0;
+        }
+    </style>
+</head>
+<body>
+    <dl>
+        <dt>aaa</dt>
+        <dd>a111</dd>
+        <dd>wefwef</dd>
+        <dd>ssewerwer</dd>
+
+        <dt>aaa</dt>
+        <dd>a111</dd>
+        <dd>wefwef</dd>
+        <dd>ssewerwer</dd>
+
+        <dt>aaa</dt>
+        <dd>a111</dd>
+        <dd>wefwef</dd>
+        <dd>ssewerwer</dd>
+    </dl>
+</body>
+</html>
