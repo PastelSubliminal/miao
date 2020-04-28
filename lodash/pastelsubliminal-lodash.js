@@ -1,6 +1,6 @@
 var pastelsubliminal = {
-    isNan:function(val){
-
+    isNaN:function(val){
+        return val === NaN;
     },
     isNull:function(val){
         return val === null;
