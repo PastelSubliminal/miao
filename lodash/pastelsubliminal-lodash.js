@@ -1,8 +1,11 @@
 var pastelsubliminal = {
-    isNaN:function(val){
-        return val === NaN;
+    isNaN:function(value){
+        return this.isNumber(value) && value != value;
     },
-    isNull:function(val){
-        return val === null;
+    isNumber:function(value){
+        return typeof value === "number";
+    },
+    isNull:function(value){
+        return value === null;
     },
 }
