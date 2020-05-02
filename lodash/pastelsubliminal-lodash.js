@@ -36,10 +36,21 @@ var pastelsubliminal = {
         return array.length > n ? array.slice(0, array.length - n) : [];
     },
     dropRightWhile:function(array, predicate){
-
+        //if predicate is not a function, transform predicate into a function
+        predicate = iteratee(predicate);
+        for(let i = array.length - 1; i >= 0; i--){
+            if(predicate(array[i] === false)){
+                return array.slice(0, i + 1);
+            }
+        }
     },
     dropWhile:function(array, predicate){
-
+        predicate = iteratee(predicate);
+        for(var i = 0; i < array.length; i++){
+            if(predicate(array[i] === false)){
+                array.slice(i)
+            }
+        }
     },
     fill:function(array, value, start=0, end=array.length){
         for(var i = start; i < end; i++){
@@ -61,5 +72,18 @@ var pastelsubliminal = {
     },
     isNull:function(value){
         return value === null;
+    },
+
+    iteratee:function(val){
+        if (isString(val)){
+          return property(val)
+        }
+        if (isArray(val)){
+          return matchesProperty(val[0], val[1])
+        }
+        if (isObjectLike(val)){
+          return matches(val)
+        }
+        return val
     },
 }
