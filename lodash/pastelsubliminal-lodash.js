@@ -60,8 +60,34 @@ var pastelsubliminal = {
     },
     findIndex:function(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-
+            predicate = iteratee(predicate);
+            if(predicate(array[i] === true)){
+                return i;
+            }
+            return -1;
         }
+    },
+    findLastIndex:function(array, predicate, fromIndex){
+        for(var i = array.length - 1; i >= 0; i--){
+            predicate = iteratee(predicate);
+            if(predicate(array[i] === true)){
+                return i;
+            }
+            return -1;
+        }
+    },
+    head:function(array){
+        if(array === []) return undefined;
+        return array[0];
+    },
+    flatten:function(array){
+        return array.flat();
+    },
+    flattenDeep:function(array){
+        return array.flat(Infinity);
+    },
+    flattenDepth:function(array, depth=1){
+        return array.flat(depth);
     },
 
     isNaN:function(value){
