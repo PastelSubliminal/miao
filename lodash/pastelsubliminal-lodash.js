@@ -15,8 +15,8 @@ var pastelsubliminal = {
         }
         return result;
     },
-    concat:function(array, ...values){
-        return array = array.concat(...values);
+    concat:function(array, ...value){
+        return array = array.concat(...value);
     },
     difference:function(array, ...value){
         let result = array.slice();
@@ -89,6 +89,51 @@ var pastelsubliminal = {
     flattenDepth:function(array, depth=1){
         return array.flat(depth);
     },
+    fromPairs:function(pairs){
+        let object = {}
+        for(let[key, value] of pairs){
+            obj[key] = value;
+        }
+        return object;
+    },
+    indexOf:function(array, value, fromIndex=0){
+        for(let i = fromIndex; i < array.length; i++){
+            if(array[i] == value) return i;
+        }
+    },
+    initial:function(array){
+        let result = [];
+        let ary = [...array];
+        return result.push(ary.splice(-1, 1));
+    },
+    intersection(...arrays){
+        var result
+    },
+    join:function(array, separator=','){
+        return array.join(separator);
+    },
+    last:function(array){
+        return array[array.length -1];
+    },
+    lastIndexOf:function(array, value, fromIndex=array.length-1){
+        if(fromIndex = NaN) return -1;
+        for(var i = fromIndex; i >= 0; i--){
+            if(array[i] == value) return i;
+        }
+        return -1;
+    },
+    nth:function(array, n=0){
+        if(n < 0) return array.slice(n, n - 1);
+        return array.slice(n, n + 1)
+    },
+
+    toPairs:function(object){
+        let result = [];
+        for(let [key, value] of Object.entries(object)){
+            result.push([key, value])
+        }
+    },
+
 
     isNaN:function(value){
         return this.isNumber(value) && value != value;
@@ -100,16 +145,16 @@ var pastelsubliminal = {
         return value === null;
     },
 
-    iteratee:function(val){
-        if (isString(val)){
-          return property(val)
+    iteratee:function(value){
+        if (isString(value)){
+          return property(value)
         }
-        if (isArray(val)){
-          return matchesProperty(val[0], val[1])
+        if (isArray(value)){
+          return matchesProperty(value[0], value[1])
         }
-        if (isObjectLike(val)){
-          return matches(val)
+        if (isObjectLike(value)){
+          return matches(value)
         }
-        return val
+        return value
     },
 }
