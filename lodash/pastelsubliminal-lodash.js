@@ -49,17 +49,17 @@ var pastelsubliminal = {
     },
     dropRightWhile:function(array, predicate){
         //if predicate is not a function, transform predicate into a function
-        predicate = iteratee(predicate);
+        pred = iteratee(predicate);
         for(let i = array.length - 1; i >= 0; i--){
-            if(predicate(array[i] === false)){
+            if(pred(array[i] === false)){
                 return array.slice(0, i + 1);
             }
         }
     },
     dropWhile:function(array, predicate){
-        predicate = iteratee(predicate);
+        pred = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
-            if(predicate(array[i] === false)){
+            if(pred(array[i] === false)){
                 array.slice(i)
             }
         }
@@ -72,8 +72,8 @@ var pastelsubliminal = {
     },
     findIndex:function(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-            predicate = iteratee(predicate);
-            if(predicate(array[i] === true)){
+            pred = iteratee(predicate);
+            if(pred(array[i] === true)){
                 return i;
             }
             return -1;
@@ -81,8 +81,8 @@ var pastelsubliminal = {
     },
     findLastIndex:function(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            predicate = iteratee(predicate);
-            if(predicate(array[i] === true)){
+            pred = iteratee(predicate);
+            if(pred(array[i] === true)){
                 return i;
             }
             return -1;
