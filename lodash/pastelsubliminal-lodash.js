@@ -144,7 +144,7 @@ var pastelsubliminal = {
     isNull:function(value){
         return value === null;
     },
-    iteratee = function(value){
+    iteratee:function(value){
         if (isString(value)){
           return property(value);
         }
