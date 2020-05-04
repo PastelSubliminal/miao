@@ -1,4 +1,16 @@
 var pastelsubliminal = {
+    iteratee:function(value){
+        if (isString(value)){
+          return property(value)
+        }
+        if (isArray(value)){
+          return matchesProperty(value[0], value[1])
+        }
+        if (isObjectLike(value)){
+          return matches(value)
+        }
+        return value;
+    },
     chunk:function(array, size=1){
         let index = 0;
         let resIndex = 0;
@@ -116,7 +128,7 @@ var pastelsubliminal = {
         return array[array.length -1];
     },
     lastIndexOf:function(array, value, fromIndex=array.length-1){
-        if(fromIndex = NaN) return -1;
+        if(fromIndex == NaN) return -1;
         for(var i = fromIndex; i >= 0; i--){
             if(array[i] == value) return i;
         }
@@ -143,18 +155,5 @@ var pastelsubliminal = {
     },
     isNull:function(value){
         return value === null;
-    },
-
-    iteratee:function(value){
-        if (isString(value)){
-          return property(value)
-        }
-        if (isArray(value)){
-          return matchesProperty(value[0], value[1])
-        }
-        if (isObjectLike(value)){
-          return matches(value)
-        }
-        return value
     },
 }
