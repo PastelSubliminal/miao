@@ -1,16 +1,4 @@
 var pastelsubliminal = {
-    iteratee:function(value){
-        if (isString(value)){
-          return property(value)
-        }
-        if (isArray(value)){
-          return matchesProperty(value[0], value[1])
-        }
-        if (isObjectLike(value)){
-          return matches(value)
-        }
-        return value;
-    },
     chunk:function(array, size=1){
         let index = 0;
         let resIndex = 0;
@@ -155,5 +143,17 @@ var pastelsubliminal = {
     },
     isNull:function(value){
         return value === null;
+    },
+    iteratee = function(value){
+        if (isString(value)){
+          return property(value);
+        }
+        if (isArray(value)){
+          return matchesProperty(value[0], value[1]);
+        }
+        if (isObjectLike(value)){
+          return matches(value);
+        }
+        return value;
     },
 }
