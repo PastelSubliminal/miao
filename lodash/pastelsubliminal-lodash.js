@@ -102,12 +102,14 @@ var pastelsubliminal = {
         }
     },
     initial:function(array){
-        let result = [];
-        let ary = [...array];
-        return result.push(ary.splice(-1, 1));
+        return array.slice(0, -1)
     },
     intersection(...arrays){
-        var result
+        return arrays[0].filter(item =>
+            arrays.every(value =>
+                value.includes(item)
+                )
+            );
     },
     join:function(array, separator=','){
         return array.join(separator);
@@ -123,18 +125,48 @@ var pastelsubliminal = {
         return -1;
     },
     nth:function(array, n=0){
-        if(n < 0) return array.slice(n, n - 1);
-        return array.slice(n, n + 1)
+        if(n < 0) return array[array.length + n];
+        return array[n];
     },
+    pull:function(array, ...value){
+        for(let i = 0; i < array.length; i++){
+            if(value.includes(array[i])) array.splice(i, 1);
+            i--;
+        }
+        return array;
+    },
+    reverse:function(array){
+        var result = [];
+        for(let i = array.length - 1; i = 0; i--){
+            result.push[i];
+        }
+        return result;
+    },
+    sortedIndex:function(array, value){
+        for(let i = 0; i < array.length; i++){
+            if(array[i] >= value) return i;
+        }
+    },
+    union:function(...arrays){
+        return Array.from(new Set(flattenDeep(arrays)));
+    },
+    unionBy:function(arrays){
 
+    },
+    unzip:function(array){
+
+    },
+    zip:function(...arrays){
+
+    },
+//分割线--------------------------------------------------------
     toPairs:function(object){
         let result = [];
         for(let [key, value] of Object.entries(object)){
             result.push([key, value])
         }
     },
-
-
+//分割线--------------------------------------------------------
     isNaN:function(value){
         return this.isNumber(value) && value != value;
     },
