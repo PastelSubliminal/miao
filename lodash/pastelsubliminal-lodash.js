@@ -37,7 +37,7 @@ var pastelsubliminal = {
     },
     dropRightWhile:function(array, predicate){
         //if predicate is not a function, transform predicate into a function
-        pred = iteratee(predicate);
+        predicate = iteratee(predicate);
         for(let i = array.length - 1; i >= 0; i--){
             if(pred(array[i] === false)){
                 return array.slice(0, i + 1);
@@ -45,7 +45,7 @@ var pastelsubliminal = {
         }
     },
     dropWhile:function(array, predicate){
-        pred = iteratee(predicate);
+        predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(pred(array[i] === false)){
                 array.slice(i)
@@ -69,7 +69,7 @@ var pastelsubliminal = {
     },
     findLastIndex:function(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            pred = iteratee(predicate);
+            predicate = iteratee(predicate);
             if(pred(array[i] === true)){
                 return i;
             }
@@ -158,6 +158,16 @@ var pastelsubliminal = {
     },
     zip:function(...arrays){
 
+    },
+    countBy:function(collection, iteratee){
+        let object = {};
+        predicate = iteratee(predicate);
+        collection = collection.object(it => predicate(it));
+        for(let i = 0; i < collection.length; i++){
+            if(collection[i] in object) object[collection[i]]++;
+            else object[collection[i]] = 1;
+        }
+        return object;
     },
 //分割线--------------------------------------------------------
     toPairs:function(object){
