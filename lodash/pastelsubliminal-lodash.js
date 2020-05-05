@@ -37,7 +37,7 @@ var pastelsubliminal = {
     },
     dropRightWhile:function(array, predicate){
         //if predicate is not a function, transform predicate into a function
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         for(let i = array.length - 1; i >= 0; i--){
             if(pred(array[i] === false)){
                 return array.slice(0, i + 1);
@@ -45,7 +45,7 @@ var pastelsubliminal = {
         }
     },
     dropWhile:function(array, predicate){
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(pred(array[i] === false)){
                 array.slice(i)
@@ -60,7 +60,7 @@ var pastelsubliminal = {
     },
     findIndex:function(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-            pred = iteratee(predicate);
+            predicate = this.iteratee(predicate);
             if(pred(array[i] === true)){
                 return i;
             }
@@ -69,7 +69,7 @@ var pastelsubliminal = {
     },
     findLastIndex:function(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            predicate = iteratee(predicate);
+            predicate = this.iteratee(predicate);
             if(pred(array[i] === true)){
                 return i;
             }
@@ -157,7 +157,17 @@ var pastelsubliminal = {
 
     },
     zip:function(...arrays){
-
+        let maxLength = 0;
+        arrays.forEach(array => {
+            maxLength = Math.max(maxLength, array.length)
+        });
+        let array = arrays.map((_, i) =>
+            array.map((item) =>
+                item[i]
+            )
+        );
+        while(array.length > maxLength) array.length--;
+        return array;
     },
     countBy:function(collection, iteratee){
         let object = {};
@@ -169,8 +179,10 @@ var pastelsubliminal = {
         }
         return object;
     },
-    every:function(collection, predicate=_.identity){
+    every:function(collection, predicate){
+        for(let i = 0; i < collection.length; i++){
 
+        }
     },
 //分割线--------------------------------------------------------
     toPairs:function(object){
