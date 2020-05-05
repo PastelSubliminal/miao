@@ -37,7 +37,7 @@ var pastelsubliminal = {
     },
     dropRightWhile:function(array, predicate){
         //if predicate is not a function, transform predicate into a function
-        predicate = this.iteratee(predicate);
+        predicate = pastelsubliminal.iteratee(predicate);
         for(let i = array.length - 1; i >= 0; i--){
             if(pred(array[i] === false)){
                 return array.slice(0, i + 1);
@@ -45,7 +45,7 @@ var pastelsubliminal = {
         }
     },
     dropWhile:function(array, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = pastelsubliminal.iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(pred(array[i] === false)){
                 array.slice(i)
@@ -69,7 +69,7 @@ var pastelsubliminal = {
     },
     findLastIndex:function(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            predicate = this.iteratee(predicate);
+            predicate = pastelsubliminal.iteratee(predicate);
             if(pred(array[i] === true)){
                 return i;
             }
@@ -155,6 +155,15 @@ var pastelsubliminal = {
     },
     unzip:function(array){
 
+    },
+    without:function(array, ...values){
+        let result = [];
+        for(let item of array){
+            if(!values.includes(item)){
+                result.push(item);
+            }
+        }
+        return result;
     },
     zip:function(...arrays){
         let maxLength = 0;
