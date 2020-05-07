@@ -60,7 +60,7 @@ var pastelsubliminal = {
     },
     findIndex:function(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-            predicate = this.iteratee(predicate);
+            predicate = iteratee(predicate);
             if(pred(array[i] === true)){
                 return i;
             }
@@ -92,7 +92,7 @@ var pastelsubliminal = {
     fromPairs:function(pairs){
         let object = {}
         for(let[key, value] of pairs){
-            obj[key] = value;
+            object[key] = value;
         }
         return object;
     },
@@ -118,7 +118,7 @@ var pastelsubliminal = {
         return array[array.length -1];
     },
     lastIndexOf:function(array, value, fromIndex=array.length-1){
-        if(fromIndex == NaN) return -1;
+        if(typeof(fromIndex) === "Undefined") return -1;
         for(var i = fromIndex; i >= 0; i--){
             if(array[i] == value) return i;
         }
@@ -205,6 +205,19 @@ var pastelsubliminal = {
         predicate = iteratee(predicate);
         for(let i = fromIndex; i < collection.length; i++){
             if(predicate(collection[i])) return collection[i];
+        }
+    },
+    flatMap(collection, iteratee){
+        return collection.flatMap(iteratee);
+    },
+    flatMapDepth(collection, iteratee, depth=1){
+        return collection(collection.map(collection, iteratee), n);
+    },
+    groupBy(collection, iteratee){
+        iteratee = iteratee(iteratee);
+        let object = new Object;
+        for(let i = 0; i < collection.length; i++){
+
         }
     },
 //分割线--------------------------------------------------------
