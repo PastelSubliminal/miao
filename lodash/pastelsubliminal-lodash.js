@@ -257,30 +257,17 @@ var pastelsubliminal = {
     isNull:function(value){
         return value === null;
     },
-    // iteratee:function(value){
-    //     if (isString(value)){
-    //       return property(value);
-    //     }
-    //     if (isArray(value)){
-    //       return matchesProperty(value[0], value[1]);
-    //     }
-    //     if (isObjectLike(value)){
-    //       return matches(value);
-    //     }
-    //     return value;
-    // },
-    iteratee:function(func = this.identity) {
-        if (typeof func === "string") {
-          return this.property(func);
+    iteratee:function(value){
+        if (isString(value)){
+          return property(value);
         }
-        if (Array.isArray(func)) {
-          return this.matchesProperty(func[0], func[1]);
+        if (isArray(value)){
+          return matchesProperty(value[0], value[1]);
         }
-        if (typeof func === "function") {
-          return func;
-        } else {
-          return this.matches(func);
+        if (isObjectLike(value)){
+          return matches(value);
         }
+        return value;
     },
     sort:function(a, b){
         return a - b;
