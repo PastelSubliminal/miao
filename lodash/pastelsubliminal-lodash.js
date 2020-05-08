@@ -165,6 +165,14 @@ var pastelsubliminal = {
         }
         return result;
     },
+    xor:function(...arrays){
+        let array = arrays.flatMapDepth.sort();
+        for(let i = 0; i < array.length; i++){
+            if(array[i] = array[i + 1]){
+                array.splice(i, i + 2);
+            }
+        }
+    },
     zip:function(...arrays){
         let maxLength = 0;
         arrays.forEach(array => {
@@ -213,12 +221,24 @@ var pastelsubliminal = {
     flatMapDepth(collection, iteratee, depth=1){
         return collection(collection.map(collection, iteratee), n);
     },
+    forEach(collection, iteratee){
+
+    },
     groupBy(collection, iteratee){
         iteratee = iteratee(iteratee);
         let object = new Object;
         for(let i = 0; i < collection.length; i++){
-
+            if(object[iteratee(collection[i])]){
+                object[iteratee(collection[i])].push(collection[i]);
+            }else{
+                object[iteratee(collection[i])] = [collection[i]];
+            }
         }
+        return object;
+    },
+    keyBy:function(collection, iteratee){
+        let iteratee = iteratee(iteratee);
+
     },
 //分割线--------------------------------------------------------
     toPairs:function(object){
@@ -261,5 +281,8 @@ var pastelsubliminal = {
         } else {
           return this.matches(func);
         }
-      },
+    },
+    sort:function(a, b){
+        return a - b;
+    },
 }
