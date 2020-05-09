@@ -224,8 +224,8 @@ var pastelsubliminal = {
     forEach(collection, iteratee){
 
     },
-    groupBy(collection, iteratee){
-        iteratee = iteratee(iteratee);
+    groupBy(collection, predicate){
+        predicate = iteratee(predicate);
         let object = new Object;
         for(let i = 0; i < collection.length; i++){
             if(object[iteratee(collection[i])]){
@@ -236,8 +236,7 @@ var pastelsubliminal = {
         }
         return object;
     },
-    keyBy:function(collection, iteratee){
-        let iteratee = iteratee(iteratee);
+    keyBy:function(collection, predicate){
 
     },
 //分割线--------------------------------------------------------
