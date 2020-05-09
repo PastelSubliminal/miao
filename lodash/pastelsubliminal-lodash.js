@@ -166,7 +166,7 @@ var pastelsubliminal = {
         return result;
     },
     xor:function(...arrays){
-        let array = arrays.flatMapDepth.sort();
+        let array = this.flatMapDepth(arrays);
         for(let i = 0; i < array.length; i++){
             if(array[i] = array[i + 1]){
                 array.splice(i, i + 2);
@@ -256,19 +256,17 @@ var pastelsubliminal = {
     isNull:function(value){
         return value === null;
     },
-    iteratee:function(value){
-        if (isString(value)){
-          return property(value);
+    iteratee:function(func = this.identity) {
+        if (typeof func === "string") {
+          return this.property(func);
         }
-        if (isArray(value)){
-          return matchesProperty(value[0], value[1]);
+        if (Array.isArray(func)) {
+          return this.matchesProperty(func[0], func[1]);
         }
-        if (isObjectLike(value)){
-          return matches(value);
+        if (typeof func === "function") {
+          return func;
+        } else {
+          return this.matches(func);
         }
-        return value;
-    },
-    sort:function(a, b){
-        return a - b;
     },
 }
