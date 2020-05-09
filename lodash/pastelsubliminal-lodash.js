@@ -256,6 +256,15 @@ var pastelsubliminal = {
     isNull:function(value){
         return value === null;
     },
+    isMatch:function(object, source){
+        for(let key of object){
+            if(this.isEqual(object[key], source[key])) return true;
+        }
+        return false;
+    },
+    matches:function(source){
+
+    },
     iteratee:function(func = this.identity) {
         if (typeof func === "string") {
           return this.property(func);
