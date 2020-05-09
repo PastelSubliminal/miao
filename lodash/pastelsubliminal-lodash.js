@@ -148,7 +148,7 @@ var pastelsubliminal = {
         }
     },
     union:function(...arrays){
-        return Array.from(new Set(flattenDeep(arrays)));
+        return Array.from(new Set(this.flattenDeep(arrays)));
     },
     unionBy:function(arrays){
 
@@ -237,7 +237,7 @@ var pastelsubliminal = {
         return object;
     },
     keyBy:function(collection, predicate){
-
+        predicate = iteratee(predicate)
     },
 //分割线--------------------------------------------------------
     toPairs:function(object){
