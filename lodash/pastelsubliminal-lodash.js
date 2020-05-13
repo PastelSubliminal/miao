@@ -37,7 +37,7 @@ var pastelsubliminal = {
     },
     dropRightWhile:function(array, predicate){
         //if predicate is not a function, transform predicate into a function
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(let i = array.length - 1; i >= 0; i--){
             if(predicate(array[i] === false)){
                 return array.slice(0, i + 1);
@@ -45,7 +45,7 @@ var pastelsubliminal = {
         }
     },
     dropWhile:function(array, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i] === false)){
                 array.slice(i)
@@ -60,7 +60,7 @@ var pastelsubliminal = {
     },
     findIndex:function(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-            predicate = this.iteratee(predicate);
+            predicate = iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
@@ -69,7 +69,7 @@ var pastelsubliminal = {
     },
     findLastIndex:function(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            predicate = this.iteratee(predicate);
+            predicate = iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
@@ -79,6 +79,11 @@ var pastelsubliminal = {
     head:function(array){
         if(array === []) return undefined;
         return array[0];
+    },
+    indexOf:function(array, value, fromIndex=0){
+        for(let i = fromIndex; i < array.length; i++){
+            if(String(array[i]) == String(value)) return i;
+        }
     },
     flatten:function(array){
         return array.flat();
@@ -95,11 +100,6 @@ var pastelsubliminal = {
             object[key] = value;
         }
         return object;
-    },
-    indexOf:function(array, value, fromIndex=0){
-        for(let i = fromIndex; i < array.length; i++){
-            if(String(array[i]) == String(value)) return i;
-        }
     },
     initial:function(array){
         return array.slice(0, -1)
@@ -120,7 +120,7 @@ var pastelsubliminal = {
     lastIndexOf:function(array, value, fromIndex=array.length-1){
         if(typeof(fromIndex) === "Undefined") return -1;
         for(var i = fromIndex; i >= 0; i--){
-            if(array[i] == value) return i;
+            if(String(array[i]) == String(value)) return i;
         }
         return -1;
     },
@@ -168,7 +168,7 @@ var pastelsubliminal = {
         return result;
     },
     xor:function(...arrays){
-        let array = this.flatMapDepth(arrays);
+        let array = flattenDeep(arrays);
         for(let i = 0; i < array.length; i++){
             if(array[i] = array[i + 1]){
                 array.splice(i, i + 2);
@@ -190,7 +190,7 @@ var pastelsubliminal = {
     },
     countBy:function(collection, iteratee){
         let object = {};
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         collection = collection.object(it => predicate(it));
         for(let i = 0; i < collection.length; i++){
             if(collection[i] in object) object[collection[i]]++;
@@ -200,19 +200,19 @@ var pastelsubliminal = {
     },
     every:function(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if(!this.iteratee(predicate)(array[i], i, array)) return false;
+            if(!iteratee(predicate)(array[i], i, array)) return false;
         }
         return true;
     },
     filter:function(collection, predicate){
         let result = [];
         array.forEach(element => {
-            if(this.iteratee(predicate)(element)) result.push(element);
+            if(iteratee(predicate)(element)) result.push(element);
         });
         return result;
     },
     find:function(collection, predicate, fromIndex=0){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(let i = fromIndex; i < collection.length; i++){
             if(predicate(collection[i])) return collection[i];
         }
@@ -227,7 +227,7 @@ var pastelsubliminal = {
 
     },
     groupBy(collection, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         let object = new Object;
         for(let i = 0; i < collection.length; i++){
             if(object[iteratee(collection[i])]){
@@ -239,7 +239,12 @@ var pastelsubliminal = {
         return object;
     },
     keyBy:function(collection, predicate){
-        predicate = this.iteratee(predicate)
+        predicate = iteratee(predicate)
+        let hash = {}
+    },
+    map(collection, predicate){
+        predicate = iteratee(predicate);
+
     },
 //分割线--------------------------------------------------------
     toPairs:function(object){
