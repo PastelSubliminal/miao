@@ -39,7 +39,7 @@ var pastelsubliminal = {
         //if predicate is not a function, transform predicate into a function
         predicate = this.iteratee(predicate);
         for(let i = array.length - 1; i >= 0; i--){
-            if(pred(array[i] === false)){
+            if(predicate(array[i] === false)){
                 return array.slice(0, i + 1);
             }
         }
@@ -47,7 +47,7 @@ var pastelsubliminal = {
     dropWhile:function(array, predicate){
         predicate = this.iteratee(predicate);
         for(var i = 0; i < array.length; i++){
-            if(pred(array[i] === false)){
+            if(predicate(array[i] === false)){
                 array.slice(i)
             }
         }
@@ -61,7 +61,7 @@ var pastelsubliminal = {
     findIndex:function(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
             predicate = this.iteratee(predicate);
-            if(pred(array[i] === true)){
+            if(predicate(array[i] === true)){
                 return i;
             }
             return -1;
@@ -70,7 +70,7 @@ var pastelsubliminal = {
     findLastIndex:function(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
             predicate = this.iteratee(predicate);
-            if(pred(array[i] === true)){
+            if(predicate(array[i] === true)){
                 return i;
             }
             return -1;
@@ -98,7 +98,7 @@ var pastelsubliminal = {
     },
     indexOf:function(array, value, fromIndex=0){
         for(let i = fromIndex; i < array.length; i++){
-            if(array[i] == value) return i;
+            if(String(array[i]) == String(value)) return i;
         }
     },
     initial:function(array){
@@ -128,12 +128,14 @@ var pastelsubliminal = {
         if(n < 0) return array[array.length + n];
         return array[n];
     },
-    pull:function(array, ...value){
-        for(let i = 0; i < array.length; i++){
-            if(value.includes(array[i])) array.splice(i, 1);
-            i--;
+    pull:function(array, ...values){
+        let result = [];
+        for(let value of array){
+            if(values.indexOf(value) == -1){
+                result.push(value);
+            }
         }
-        return array;
+        return result;
     },
     reverse:function(array){
         var result = [];
