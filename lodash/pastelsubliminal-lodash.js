@@ -177,7 +177,7 @@ var pastelsubliminal = {
         arrays.forEach(element => {
             maxLength = Math.max(maxLength, element.length)
         });
-        let array = arrays.map((_, i) =>
+        var array = arrays.map((_, i) =>
             array.map((item) =>
                 item[i]
             )
