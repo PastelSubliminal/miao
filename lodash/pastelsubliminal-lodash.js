@@ -291,7 +291,19 @@ var pastelsubliminal = {
         return false;
     },
     matches:function(source){
-
+        return function(object){
+            return this.isMatch(object, source);
+        }
+    },
+    property:function(path){
+        return function(object){
+            return get (object, path);
+        }
+    },
+    matchesProperty:function(path, srcValue){
+        return function(object){
+            return this.isMatch(this.property(path)(object), srcValue);
+        }
     },
     iteratee:function(func = this.identity) {
         if (typeof func === "string") {
