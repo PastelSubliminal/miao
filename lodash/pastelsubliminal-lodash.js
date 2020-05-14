@@ -290,7 +290,7 @@ var pastelsubliminal = {
 
         let keysVal = Object.keys(value), keysOth = Object.keys(other);
         if(keysVal.length !== keysOth.length) return false;
-        for(let keys of keysVal){
+        for(let key of keysVal){
             if(!keysOth.includes(key) || !this.isEqual(value[key], other[key])) return false;
         }
         return true;
