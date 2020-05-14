@@ -284,6 +284,17 @@ var pastelsubliminal = {
     isNull:function(value){
         return value === null;
     },
+    isEqual:function(value, other){
+        if(value === other) return true;
+        if(value === null || other === null || typeof value !== "object" || typeof other !== "object") return false;
+
+        let keysVal = Object.keys(value), keysOth = Object.keys(other);
+        if(keysVal.length !== keysOth.length) return false;
+        for(let keys of keysVal){
+            if(!keysOth.includes(key) || !this.isEqual(value[key], other[key])) return false;
+        }
+        return true;
+    },
     isMatch:function(object, source){
         for(let key of object){
             if(this.isEqual(object[key], source[key])) return true;
@@ -304,6 +315,9 @@ var pastelsubliminal = {
         return function(object){
             return this.isMatch(this.property(path)(object), srcValue);
         }
+    },
+    identity: function(...args) {
+        return args[0];
     },
     iteratee:function(func = this.identity) {
         if (typeof func === "string") {
