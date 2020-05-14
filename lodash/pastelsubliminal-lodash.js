@@ -37,7 +37,7 @@ var pastelsubliminal = {
     },
     dropRightWhile:function(array, predicate){
         //if predicate is not a function, transform predicate into a function
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         for(let i = array.length - 1; i >= 0; i--){
             if(predicate(array[i] === false)){
                 return array.slice(0, i + 1);
@@ -45,7 +45,7 @@ var pastelsubliminal = {
         }
     },
     dropWhile:function(array, predicate){
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i] === false)){
                 array.slice(i)
@@ -60,7 +60,7 @@ var pastelsubliminal = {
     },
     findIndex:function(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-            predicate = iteratee(predicate);
+            predicate = this.iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
@@ -69,7 +69,7 @@ var pastelsubliminal = {
     },
     findLastIndex:function(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            predicate = iteratee(predicate);
+            predicate = this.iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
@@ -139,9 +139,9 @@ var pastelsubliminal = {
     },
     reverse:function(array){
         var result = [];
-        for(let i = array.length - 1; i = 0; i--){
-            result.push[i];
-        }
+        array.forEach(element =>{
+            result.unshift(element);
+        })
         return result;
     },
     sortedIndex:function(array, value){
@@ -168,12 +168,9 @@ var pastelsubliminal = {
         return result;
     },
     xor:function(...arrays){
-        let array = flattenDeep(arrays);
-        for(let i = 0; i < array.length; i++){
-            if(array[i] = array[i + 1]){
-                array.splice(i, i + 2);
-            }
-        }
+        let array = arrays.flat();
+        return array.filter((item) =>
+            array.lastIndexOf(item) === array.indexOf(item));
     },
     zip:function(...arrays){
         let maxLength = 0;
@@ -190,7 +187,7 @@ var pastelsubliminal = {
     },
     countBy:function(collection, iteratee){
         let object = {};
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         collection = collection.object(it => predicate(it));
         for(let i = 0; i < collection.length; i++){
             if(collection[i] in object) object[collection[i]]++;
@@ -206,13 +203,13 @@ var pastelsubliminal = {
     },
     filter:function(collection, predicate){
         let result = [];
-        array.forEach(element => {
+        collection.forEach(element => {
             if(iteratee(predicate)(element)) result.push(element);
         });
         return result;
     },
     find:function(collection, predicate, fromIndex=0){
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         for(let i = fromIndex; i < collection.length; i++){
             if(predicate(collection[i])) return collection[i];
         }
@@ -227,7 +224,7 @@ var pastelsubliminal = {
 
     },
     groupBy(collection, predicate){
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         let object = new Object;
         for(let i = 0; i < collection.length; i++){
             if(object[iteratee(collection[i])]){
@@ -239,12 +236,36 @@ var pastelsubliminal = {
         return object;
     },
     keyBy:function(collection, predicate){
-        predicate = iteratee(predicate)
+        predicate = this.iteratee(predicate)
         let hash = {}
     },
     map(collection, predicate){
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
 
+    },
+    // partition(collection, predicate){
+
+    // },
+    // reduce(collection, predicate, accumulator){
+
+    // },
+    // reduceRight(collection, iteratee=, accumulator){
+
+    // },
+    // reject(collection, predicate){
+
+    // },
+    // sample(collection){
+
+    // },
+    // shuffle(collection){
+
+    // },
+    size(collection){
+        return collection.length || Object.keys(collection).length;
+    },
+    some(collection, predicate){
+        predicate = this.iteratee(predicate);
     },
 //分割线--------------------------------------------------------
     toPairs:function(object){
