@@ -174,8 +174,8 @@ var pastelsubliminal = {
     },
     zip:function(...arrays){
         let maxLength = 0;
-        arrays.forEach(array => {
-            maxLength = Math.max(maxLength, array.length)
+        arrays.forEach(element => {
+            maxLength = Math.max(maxLength, element.length)
         });
         let array = arrays.map((_, i) =>
             array.map((item) =>
