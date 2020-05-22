@@ -336,9 +336,8 @@ var pastelsubliminal = {
         return true;
     },
     matches:function(source){
-        return function(object){
-            return this.isMatch(object, source);
-        }
+        return object =>
+            this.isMatch(object, source);
     },
     property:function(path){
         return function(object){
