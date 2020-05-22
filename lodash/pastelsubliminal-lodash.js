@@ -267,6 +267,39 @@ var pastelsubliminal = {
     some(collection, predicate){
         predicate = this.iteratee(predicate);
     },
+    // sortBy(collection, predicate){
+
+    // },
+    // defer(func, args){
+
+    // },
+    // delay(func, wait, args){
+
+    // },
+    isArguments:function(value){
+        return Object.prototype.toString.call(value) === "[object Arguement]";
+    },
+    isArray:function(value){
+        return Array.isArray(value);
+    },
+    isBoolean:function(value){
+        return Object.prototype.toString.call(value) === "[object Boolean]";
+    },isDate:function(value){
+        return Object.prototype.toString.call(value) === "[object Date]";
+    },
+    isElement:function(value){
+        return Object.prototype.toString.call(value) === "[object Element]";
+    },
+    isEmpty:function(value){
+        let i = 0;
+        for(let key in value){
+            i++
+        }
+        return i == 0;
+    },
+    isEqual(value, other){
+
+    },
 //分割线--------------------------------------------------------
     toPairs:function(object){
         let result = [];
@@ -296,10 +329,11 @@ var pastelsubliminal = {
         return true;
     },
     isMatch:function(object, source){
-        for(let key of object){
-            if(this.isEqual(object[key], source[key])) return true;
+        if(typeof source !== "object" || typeof object !== "object") return source === object;
+        for(let key in source){
+            if(!(key in object) || !this.isMatch(object[key], source[key])) return false;
         }
-        return false;
+        return true;
     },
     matches:function(source){
         return function(object){
