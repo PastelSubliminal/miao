@@ -185,7 +185,7 @@ var pastelsubliminal = {
         while(array.length > maxLength) array.length--;
         return array;
     },
-    countBy:function(collection, iteratee){
+    countBy:function(collection, predicate){
         let object = {};
         predicate = this.iteratee(predicate);
         collection = collection.object(it => predicate(it));
@@ -356,18 +356,20 @@ var pastelsubliminal = {
         return Math.ceil(number * 10 ** n) / 10 ** n;
     },
     max:function(array){
-        if(array == [] || false) return undefined;
+        if(!array || array.length == 0) return undefined;
          return Math.max(...array);
     },
-    maxBy:function(array, predicate){
+    // maxBy:function(array, predicate){
 
+    // },
+    min:function(array){
+        if(!array || array.length == 0) return undefined;
+        return Math.min(...array);
     },
-    // min:function(array){
-
-    // },
-    // round:function(number, precision=0){
-
-    // },
+    round:function(number, precision=0){
+        var t = Math.pow(10, precision);
+        return Math.round(number * t ) / t;
+    },
     // sumBy:function(array, predicate){
 
     // },
@@ -377,9 +379,14 @@ var pastelsubliminal = {
     // assignIn:function(object, sources){
 
     // },
-    // defaults:function(object, sources){
-
-    // },
+    defaults:function(object, sources){
+        for(var key in sources){
+            if(!object.matchesProperty(key)){
+                object[key] = sources[key];
+            }
+        }
+        return object;
+    },
     // findKey:function(object, predicate){
 
     // },
@@ -482,7 +489,7 @@ var pastelsubliminal = {
     },
     property:function(path){
         return function(object){
-            return get (object, path);
+            return this.get(object, path);
         }
     },
     // negate(predicate)
@@ -500,6 +507,7 @@ var pastelsubliminal = {
     identity: function(...args) {
         return args[0];
     },
+//tools-----------------------------------------------------------------------------------
     iteratee:function(func = this.identity) {
         if (typeof func === "string") {
           return this.property(func);
@@ -513,4 +521,26 @@ var pastelsubliminal = {
           return this.matches(func);
         }
     },
+    filter:function(array, test){
+        var passed = [];
+        for(var i = 0; i < array.length; i++){
+            if(test(array[i]))
+                passed.push(array[i]);
+        }
+        return passed;
+    },
+    map:function(array, transform){
+        var mapped = [];
+        for(var i = 0; i < array.length; i++){
+            mapped.push(transform(array[i]));
+        return mapped;
+        }
+    },
+    reduce:function(array, combine, start){
+        var current = start;
+        for(var i = 0; i < array.length; i++){
+            current = combine(current, array[i])
+        }
+        return current;
+    }
 }
