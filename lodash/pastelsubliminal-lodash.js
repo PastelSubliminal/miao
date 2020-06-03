@@ -15,9 +15,6 @@ var pastelsubliminal = {
         }
         return result;
     },
-    concat:function(array, ...value){
-        return array = array.concat(...value);
-    },
     difference:function(array, ...value){
         let result = array.slice();
         value = [].concat(...value);
@@ -155,6 +152,9 @@ var pastelsubliminal = {
     unionBy:function(arrays){
 
     },
+    uniq:function(array){
+
+    },
     unzip:function(array){
 
     },
@@ -284,7 +284,8 @@ var pastelsubliminal = {
     },
     isBoolean:function(value){
         return Object.prototype.toString.call(value) === "[object Boolean]";
-    },isDate:function(value){
+    },
+    isDate:function(value){
         return Object.prototype.toString.call(value) === "[object Date]";
     },
     isElement:function(value){
@@ -297,26 +298,6 @@ var pastelsubliminal = {
         }
         return i == 0;
     },
-    isEqual(value, other){
-
-    },
-//分割线--------------------------------------------------------
-    toPairs:function(object){
-        let result = [];
-        for(let [key, value] of Object.entries(object)){
-            result.push([key, value])
-        }
-    },
-//分割线--------------------------------------------------------
-    isNaN:function(value){
-        return this.isNumber(value) && value != value;
-    },
-    isNumber:function(value){
-        return typeof value === "number";
-    },
-    isNull:function(value){
-        return value === null;
-    },
     isEqual:function(value, other){
         if(value === other) return true;
         if(value === null || other === null || typeof value !== "object" || typeof other !== "object") return false;
@@ -328,12 +309,172 @@ var pastelsubliminal = {
         }
         return true;
     },
+    // isError:function(value){
+
+    // },
+    // isFinite:function(value){
+
+    // },
+    // isFunction:function(value){
+
+    // },
     isMatch:function(object, source){
         if(typeof source !== "object" || typeof object !== "object") return source === object;
         for(let key in source){
             if(!(key in object) || !this.isMatch(object[key], source[key])) return false;
         }
         return true;
+    },
+    isNaN:function(value){
+        return Object.prototype.toString.call(value) === "[object Number]" && isNaN(value);
+    },
+    // isNil:function(value){
+
+    // },
+    isNull:function(value){
+        return value === null;
+    },
+    isNumber:function(value){
+        return typeof value === "number";
+    },
+    // isObject:function(value){
+
+    // },
+    // isRegExp:function(value){
+
+    // },
+    // isString:function(value){
+
+    // },
+    // isUndefined:function(value){
+
+    // },
+    // toArray:function(value){
+
+    // },
+    ceil:function(number, precision=0){
+        return Math.ceil(number * 10 ** n) / 10 ** n;
+    },
+    max:function(array){
+        if(array == [] || false) return undefined;
+         return Math.max(...array);
+    },
+    maxBy:function(array, predicate){
+
+    },
+    // min:function(array){
+
+    // },
+    // round:function(number, precision=0){
+
+    // },
+    // sumBy:function(array, predicate){
+
+    // },
+    // random:function(lower=0, upper=1, floating){
+
+    // },
+    // assignIn:function(object, sources){
+
+    // },
+    // defaults:function(object, sources){
+
+    // },
+    // findKey:function(object, predicate){
+
+    // },
+    // forIn:function(object, predicate){
+
+    // },
+    // forInRight(object, predicate){
+
+    // },
+    // functions:function(object){
+
+    // },
+    // get:function(object, path, [defaultValue]){
+
+    // },
+    // has:function(object, path){
+
+    // },
+    // invert:function(object){
+
+    // },
+    // invoke:function(object, path, [args]){
+
+    // },
+    // keys:function(object){
+
+    // },
+    // mapKeys:function(object, predicate){
+
+    // },
+    // mapValues:function(object, predicate){
+
+    // },
+    // merge:function(object, [sources]){
+
+    // },
+    // omit:function(object, [props]){
+
+    // },
+    // pick:function(object, [props]){
+
+    // },
+    // result:function(object, path, [defaultValue]){
+
+    // },
+    // set:function(object, path, value){
+
+    // },
+    toPairs:function(object){
+        let result = [];
+        for(let [key, value] of Object.entries(object)){
+            result.push([key, value])
+        }
+    },
+    // values:function(object){
+
+    // },
+    // escape:function(string=''){
+
+    // },
+    // pad:function(string='', length=0, chars=' '){
+
+    // },
+    // padEnd:function(string='', length=0, chars=' '){
+
+    // },
+    // padStart:function(string='', length=0, chars=' '){
+
+    // },
+    // unescape:function(string=''){
+
+    // },
+    // bindAll:function(object, methodNames){
+
+    // },
+    // range:function([start=0], end, [step=1]){
+
+    // },
+    // mixin:function([object=lodash], source, [options={}]){
+
+    // },
+    // times:function(n, predicate){
+
+    // },
+    // uniqueId:function([prefix='']){
+
+    // },
+    // cloneDeep:function(value){
+
+    // },
+    identity: function(...args) {
+        return args[0];
+    },
+    concat:function(array, ...value){
+        return array = array.concat(...value);
     },
     matches:function(source){
         return object =>
@@ -344,6 +485,13 @@ var pastelsubliminal = {
             return get (object, path);
         }
     },
+    // negate(predicate)
+    // once(func)
+    // spread(func, [start=0])
+    // curry(func, [arity=func.length])
+    // memoize(func, [resolver])
+    // constant(value)
+    // propertyOf(object)
     matchesProperty:function(path, srcValue){
         return function(object){
             return this.isMatch(this.property(path)(object), srcValue);
