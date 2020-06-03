@@ -353,7 +353,8 @@ var pastelsubliminal = {
 
     // },
     ceil:function(number, precision=0){
-        return Math.ceil(number * 10 ** n) / 10 ** n;
+        var t = Math.pow(10, precision);
+        return Math.round(number * t ) / t;
     },
     max:function(array){
         if(!array || array.length == 0) return undefined;
@@ -508,19 +509,26 @@ var pastelsubliminal = {
         return args[0];
     },
 //tools-----------------------------------------------------------------------------------
-    iteratee:function(func = this.identity) {
-        if (typeof func === "string") {
-          return this.property(func);
-        }
-        if (Array.isArray(func)) {
-          return this.matchesProperty(func[0], func[1]);
-        }
-        if (typeof func === "function") {
-          return func;
-        } else {
-          return this.matches(func);
-        }
-    },
+    // iteratee:function(func = this.identity) {
+    //     if (typeof func === "string") {
+    //       return this.property(func);
+    //     }
+    //     if (Array.isArray(func)) {
+    //       return this.matchesProperty(func[0], func[1]);
+    //     }
+    //     if (typeof func === "function") {
+    //       return func;
+    //     } else {
+    //       return this.matches(func);
+    //     }
+    // },
+    _iteratee(func = this.identity) {
+        if (this.isRegExp(func)) return str => func.test(str);
+        if (this.isFunction(func)) return func;
+        if (this.isArray(func)) return this._matchesProperty(func[0], func[1]);
+        if (this.isString(func)) return this.property(func);
+        if (this.isObject(func)) return this.matches(func);
+      },
     filter:function(array, test){
         var passed = [];
         for(var i = 0; i < array.length; i++){
