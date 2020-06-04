@@ -223,10 +223,10 @@ var pastelsubliminal = {
     forEach(collection, iteratee){
 
     },
-    groupBy:function(ary, property){
+    groupBy:function(ary, f){
         var result = {};
         ary.forEach(item =>{
-            var key = item[property];
+            var key = f(item);
             if(!(key in result)){
                 result[key] = [];
             }
