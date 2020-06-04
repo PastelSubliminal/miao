@@ -34,10 +34,16 @@ var pastelsubliminal = {
     },
     dropRightWhile:function(array, predicate){
         //if predicate is not a function, transform predicate into a function
-        predicate = this.iteratee(predicate);
-        for(let i = array.length - 1; i >= 0; i--){
-            if(predicate(array[i] === false)){
-                return array.slice(0, i + 1);
+        // predicate = this.iteratee(predicate);
+        // for(let i = array.length - 1; i >= 0; i--){
+        //     if(predicate(array[i] === false)){
+        //         return array.slice(0, i + 1);
+        //     }
+        // }
+        var result = [];
+        for(var i = 0; i < array.length; i++){
+            if(predicate(array[i]) === false){
+                return array.slice(i, array.length + 1);
             }
         }
     },
