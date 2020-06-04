@@ -40,6 +40,7 @@ var pastelsubliminal = {
         //         return array.slice(0, i + 1);
         //     }
         // }
+        predicate = this.iteratee(predicate);
         var result = [];
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i]) === false){
