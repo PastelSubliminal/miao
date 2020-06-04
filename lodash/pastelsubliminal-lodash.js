@@ -552,11 +552,11 @@ var pastelsubliminal = {
     //       return this.matches(func);
     //     }
     // },
-    iteratee:function(by){
-        if(typeof by === "string"){
-            by = item => item[by];
+    iteratee:function(func){
+        if(typeof func === "string"){
+            func = item => item[func];
         }
-        return by
+        return func
     },
     filter:function(array, test){
         var passed = [];
