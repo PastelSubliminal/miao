@@ -534,7 +534,7 @@ var pastelsubliminal = {
             return this.isMatch(this.property(path)(object), srcValue);
         }
     },
-    //other-----------------------------------------------------------------------------------
+
     identity: function(...args) {
         return args[0];
     },
@@ -555,9 +555,6 @@ var pastelsubliminal = {
         if(typeof by === "string"){
             by = item => item[by];
         }
-        // else if(typeof by === "function"){
-        //     by = by(item);
-        // }
     },
     filter:function(array, test){
         var passed = [];
