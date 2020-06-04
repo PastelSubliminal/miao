@@ -227,7 +227,7 @@ var pastelsubliminal = {
         var result = {};
         ary.forEach(item =>{
             var key = item[property];
-            if(!key in result){
+            if(!(key in result)){
                 result[key] = [];
             }
             result[key].push(item);
