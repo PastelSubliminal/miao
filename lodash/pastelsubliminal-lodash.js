@@ -333,9 +333,11 @@ var pastelsubliminal = {
 
     // },
     isMatch:function(object, source){
-        if(typeof source !== "object" || typeof object !== "object") return source === object;
+        if(typeof source !== "object" || typeof object !== "object")
+            return source === object;
         for(let key in source){
-            if(!(key in object) || !this.isMatch(object[key], source[key])) return false;
+            if(!(key in object) || !this.isMatch(object[key], source[key]))
+                return false;
         }
         return true;
     },
@@ -502,11 +504,18 @@ var pastelsubliminal = {
         return object =>
             this.isMatch(object, source);
     },
-    property:function(path){
-        return function(object){
-            return this.get(object, path);
+    // property:function(path){
+    //     return function(object){
+    //         return this.get(object, path);
+    //     }
+    // },
+    property: function(path){
+        if (typeof path === "string"){
+          path = this.toPath(path);
         }
+        return obj => path.reduce((res, item) => res[item], obj);
     },
+
     // negate(predicate)
     // once(func)
     // spread(func, [start=0])
@@ -519,30 +528,30 @@ var pastelsubliminal = {
             return this.isMatch(this.property(path)(object), srcValue);
         }
     },
+    //other-----------------------------------------------------------------------------------
     identity: function(...args) {
         return args[0];
     },
-//tools-----------------------------------------------------------------------------------
-    // iteratee:function(func = this.identity) {
-    //     if (typeof func === "string") {
-    //       return this.property(func);
-    //     }
-    //     if (Array.isArray(func)) {
-    //       return this.matchesProperty(func[0], func[1]);
-    //     }
-    //     if (typeof func === "function") {
-    //       return func;
-    //     } else {
-    //       return this.matches(func);
-    //     }
-    // },
-    _iteratee(func = this.identity) {
-        if (this.isRegExp(func)) return str => func.test(str);
-        if (this.isFunction(func)) return func;
-        if (this.isArray(func)) return this._matchesProperty(func[0], func[1]);
-        if (this.isString(func)) return this.property(func);
-        if (this.isObject(func)) return this.matches(func);
-      },
+    iteratee:function(func = this.identity) {
+        if (typeof func === "string") {
+          return this.property(func);
+        }
+        if (Array.isArray(func)) {
+          return this.matchesProperty(func[0], func[1]);
+        }
+        if (typeof func === "function") {
+          return func;
+        } else {
+          return this.matches(func);
+        }
+    },
+    // _iteratee(func = this.identity) {
+    //     if (this.isRegExp(func)) return str => func.test(str);
+    //     if (this.isFunction(func)) return func;
+    //     if (this.isArray(func)) return this._matchesProperty(func[0], func[1]);
+    //     if (this.isString(func)) return this.property(func);
+    //     if (this.isObject(func)) return this.matches(func);
+    //   },
     filter:function(array, test){
         var passed = [];
         for(var i = 0; i < array.length; i++){
