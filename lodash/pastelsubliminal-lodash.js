@@ -232,6 +232,7 @@ var pastelsubliminal = {
             }
             result[key].push(item);
         })
+        return result;
     },
     // groupBy(collection, predicate){
     //     predicate = this.iteratee(predicate);
