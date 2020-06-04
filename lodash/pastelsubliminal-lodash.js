@@ -223,21 +223,34 @@ var pastelsubliminal = {
     forEach(collection, iteratee){
 
     },
-    groupBy(collection, predicate){
-        predicate = this.iteratee(predicate);
-        let object = new Object;
-        for(let i = 0; i < collection.length; i++){
-            if(object[iteratee(collection[i])]){
-                object[iteratee(collection[i])].push(collection[i]);
-            }else{
-                object[iteratee(collection[i])] = [collection[i]];
+    groupBy:function(ary, property){
+        var result = {};
+        ary.forEach(item =>{
+            var key = item[property];
+            if(!key in result){
+                result[key] = [];
             }
-        }
-        return object;
+            result[key].push(item);
+        })
     },
-    keyBy:function(collection, predicate){
-        predicate = this.iteratee(predicate)
-        let hash = {}
+    // groupBy(collection, predicate){
+    //     predicate = this.iteratee(predicate);
+    //     let object = new Object;
+    //     for(let i = 0; i < collection.length; i++){
+    //         if(object[iteratee(collection[i])]){
+    //             object[iteratee(collection[i])].push(collection[i]);
+    //         }else{
+    //             object[iteratee(collection[i])] = [collection[i]];
+    //         }
+    //     }
+    //     return object;
+    // },
+    keyBy:function(ary, key){
+        var result = {};
+        ary.forEach(item =>{
+            result[item[key]] = item;
+        })
+        return result;
     },
     map(collection, predicate){
         predicate = this.iteratee(predicate);
