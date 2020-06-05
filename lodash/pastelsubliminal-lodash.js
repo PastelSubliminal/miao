@@ -448,7 +448,7 @@ var pastelsubliminal = {
         if(this.isArray(path)){
             pathArr = path.slice();
         }else{
-            pathArr = toPath(path);
+            pathArr = this.toPath(path);
         }
         for(key of pathArr){
             if(object === undefined) return defaultValue;
