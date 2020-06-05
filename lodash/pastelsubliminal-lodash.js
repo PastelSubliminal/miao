@@ -385,8 +385,7 @@ var pastelsubliminal = {
 
     // },
     isString:function(value){
-        if(typeof value === "string") return true;
-        return false;
+        return typeof val == "string" || (isObjectLike(val) && nativeToString(val) == "[object String]");
     },
     // isUndefined:function(value){
 
@@ -430,27 +429,32 @@ var pastelsubliminal = {
         }
         return object;
     },
-    _get: function (object, path, defaultValue = undefined) {
-        let pathArr;
-        //path可能为数组或字符串;
-        if (this.isArray(path)) {
-            pathArr = path.slice();
-        }
-        else {
-            pathArr = this.toPath(path);
-        }
-        for (key of pathArr) {
-            if (object === undefined)
-                return defaultValue;
-            object = object[key];
-        }
-        return object;
-    },
-    get get() {
-        return this._get;
-    },
-    set get(value) {
-        this._get = value;
+    // findKey:function(object, predicate){
+
+    // },
+    // forIn:function(object, predicate){
+
+    // },
+    // forInRight(object, predicate){
+
+    // },
+    // functions:function(object){
+
+    // },
+    get:function(object, path, defaultValue){
+        if (isString(path)) {
+            path = this.toPath(path);
+          }
+          for (let i = 0; i < path.length; i++) {
+            if (object == undefined) {
+              return defaultValue;
+            }
+            object = object[path[i]];
+          }
+          if (object == undefined) {
+            return defaultValue;
+          }
+          return object;
     },
     toPath:function(value){
         return value.split(/\.|\[|\]\.|\]\[/g);
@@ -567,37 +571,30 @@ var pastelsubliminal = {
         }
         return false
       },
-    iteratee:function(value) {
-        if (this.isString(value)) {
-          return this.property(value)
-          // Array也是object对象, 所以在判断是否为object前判断
-        } else if (this.isArray(value)) {
-          return this.matchesProperty(value[0], value[1])
-          // 为object的情况(排除null和function)
-        } else if (this.isObjectLike(value)) {
-          return this.matches(value)
+    // iteratee:function(value) {
+    //     if (this.isString(value)) {
+    //       return this.property(value)
+    //       // Array也是object对象, 所以在判断是否为object前判断
+    //     } else if (this.isArray(value)) {
+    //       return this.matchesProperty(value[0], value[1])
+    //       // 为object的情况(排除null和function)
+    //     } else if (this.isObjectLike(value)) {
+    //       return this.matches(value)
+    //     }
+    //     return value
+    //   },
+    iteratee:function(value){
+        if(this.isString(value)){
+            return this.property(value);
         }
-        return value
-      },
-    // iteratee:function(func = this.identity) {
-    //     if (typeof func === "string") {
-    //       return this.property(func);
-    //     }
-    //     if (Array.isArray(func)) {
-    //       return this.matchesProperty(func[0], func[1]);
-    //     }
-    //     if (typeof func === "function") {
-    //       return func;
-    //     } else {
-    //       return this.matches(func);
-    //     }
-    // },
-    // iteratee:function(func){
-    //     if(typeof func === "string"){
-    //         func = item => item[func];
-    //     }
-    //     return func
-    // },
+        if(this.isArray(value)){
+            return this.matchesProperty(value[0], value[1]);
+        }
+        if(this.isObjectLike(value)){
+            return this.matches(value);
+        }
+        return value;
+    },
     filter:function(array, test){
         var passed = [];
         for(var i = 0; i < array.length; i++){
