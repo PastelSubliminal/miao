@@ -366,9 +366,10 @@ var pastelsubliminal = {
     // isRegExp:function(value){
 
     // },
-    // isString:function(value){
-
-    // },
+    isString:function(value){
+        if(typeof value === "string") return true;
+        return false;
+    },
     // isUndefined:function(value){
 
     // },
