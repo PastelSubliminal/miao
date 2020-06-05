@@ -529,18 +529,11 @@ var pastelsubliminal = {
         return object =>
             this.isMatch(object, source);
     },
-    // property:function(path){
-    //     return function(object){
-    //         return this.get(object, path);
-    //     }
-    // },
-    property: function(path){
-        if (typeof path === "string"){
-          path = this.toPath(path);
+    property:function(path){
+        return function(object){
+            return this.get(object, path);
         }
-        return obj => path.reduce((res, item) => res[item], obj);
     },
-
     // negate(predicate)
     // once(func)
     // spread(func, [start=0])
