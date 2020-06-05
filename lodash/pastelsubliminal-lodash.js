@@ -357,12 +357,19 @@ var pastelsubliminal = {
     // isFunction:function(value){
 
     // },
-    isMatch:function(object, source){
-        if(typeof source !== "object" || typeof object !== "object")
-            return source === object;
-        for(let key in source){
-            if(!(key in object) || !this.isMatch(object[key], source[key]))
-                return false;
+    isMatch:function(object, source, customizer){
+        if(object === source) return true;
+        if(object == undefined) return false;
+        for(let key of Object.keys(source)){
+            if(this.isObjectLike(source[key])){
+                if(!this.isMatch(object[key], source[key])){
+                    return false;
+                }
+            }else{
+                if(!customizer(object[key], source[key], key, object, source)){
+                    return false;
+                }
+            }
         }
         return true;
     },
