@@ -442,7 +442,7 @@ var pastelsubliminal = {
     // functions:function(object){
 
     // },
-    get:function(object, path, defaultValue){
+    get:function(object, path, defaultValue = undefineds){
         let pathArr;
         //path可能为数组或字符串;
         if(this.isArray(path)){
