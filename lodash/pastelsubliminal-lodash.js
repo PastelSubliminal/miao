@@ -458,7 +458,7 @@ var pastelsubliminal = {
     },
     toPath:function(value){
         return value.split(/\.|\[|\]\.|\]\[/g);
-    }
+    },
     // has:function(object, path){
 
     // },
