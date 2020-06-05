@@ -50,13 +50,6 @@ var pastelsubliminal = {
         return array.length > n ? array.slice(0, array.length - n) : [];
     },
     dropRightWhile:function(array, predicate){
-        //if predicate is not a function, transform predicate into a function
-        // predicate = this.iteratee(predicate);
-        // for(let i = array.length - 1; i >= 0; i--){
-        //     if(predicate(array[i] === false)){
-        //         return array.slice(0, i + 1);
-        //     }
-        // }
         predicate = this.iteratee(predicate);
         var result = [];
         for(var i = 0; i < array.length; i++){
@@ -174,11 +167,30 @@ var pastelsubliminal = {
     union:function(...arrays){
         return Array.from(new Set(this.flattenDeep(arrays)));
     },
-    unionBy:function(arrays){
+    // unionBy:function(...arrays, predicate){
+    //     predicate = this.iteratee(predicate);
+    //     var result = [];
 
-    },
+
+    // },
     uniq:function(array){
-
+        var result = [];
+        for(var item of array){
+            if(!result.includes(item)){
+                result.push(item);
+            }
+        }
+        return result;
+    },
+    uniqBy:function(array, predicate){
+        var result = [];
+        predicate = this.iteratee(predicate);
+        for(var i = 0; i < array.length; i++){
+            if(!result.includes(predicate(array[i]))){
+                result.push(array[i]);
+            }
+        }
+        return result;
     },
     unzip:function(array){
 
@@ -576,18 +588,18 @@ var pastelsubliminal = {
     isObjectLike:function(value) {
         return typeof value == "object" && value !== null;
       },
-    // iteratee:function(value) {
-    //     if (this.isString(value)) {
-    //       return this.property(value)
-    //       // Array也是object对象, 所以在判断是否为object前判断
-    //     } else if (this.isArray(value)) {
-    //       return this.matchesProperty(value[0], value[1])
-    //       // 为object的情况(排除null和function)
-    //     } else if (this.isObjectLike(value)) {
-    //       return this.matches(value)
+    // iteratee:function(value){
+    //     if(this.isString(value)){
+    //         return this.property(value);
     //     }
-    //     return value
-    //   },
+    //     if(this.isArray(value)){
+    //         return this.matchesProperty(value[0], value[1]);
+    //     }
+    //     if(this.isObjectLike(value)){
+    //         return this.matches(value);
+    //     }
+    //     return value;
+    // },
     iteratee:function(value){
         if(Object.prototype.toString.call(value) == '[object Function]'){
             return value;
