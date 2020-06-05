@@ -566,10 +566,7 @@ var pastelsubliminal = {
         return args[0];
     },
     isObjectLike:function(value) {
-        if (typeof value === 'object' && value !== null) {
-          return true
-        }
-        return false
+        return typeof value == "object" && value !== null;
       },
     // iteratee:function(value) {
     //     if (this.isString(value)) {
