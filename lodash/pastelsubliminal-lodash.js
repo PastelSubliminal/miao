@@ -70,7 +70,7 @@ var pastelsubliminal = {
         predicate = this.iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i] === false)){
-                array.slice(i)
+                array.slice(i);
             }
         }
     },
