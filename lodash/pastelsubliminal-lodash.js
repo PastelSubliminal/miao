@@ -558,7 +558,7 @@ var pastelsubliminal = {
       },
     iteratee:function(value) {
         if (this.isString(value)) {
-          return this.property(value)
+          return property(value)
           // Array也是object对象, 所以在判断是否为object前判断
         } else if (this.isArray(value)) {
           return this.matchesProperty(value[0], value[1])
@@ -566,7 +566,6 @@ var pastelsubliminal = {
         } else if (this.isObjectLike(value)) {
           return this.matches(value)
         }
-
         return value
       },
     // iteratee:function(func = this.identity) {
