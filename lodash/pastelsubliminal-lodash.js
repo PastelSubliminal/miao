@@ -193,7 +193,14 @@ var pastelsubliminal = {
         return result;
     },
     unzip:function(array){
-
+        var result = []
+        for(var i = 0; i < array[0].length; i++){
+            result[i] = [];
+            for(var j  = 0; j < array.length; i++){
+                result[i][j] = array[j][i]
+            }
+        }
+        return result;
     },
     without:function(array, ...values){
         let result = [];
@@ -209,27 +216,27 @@ var pastelsubliminal = {
         return array.filter((item) =>
             array.lastIndexOf(item) === array.indexOf(item));
     },
-    zip:function(...arrays){
-        let maxLength = 0;
-        arrays.forEach(element => {
-            maxLength = Math.max(maxLength, element.length)
-        });
-        var array = arrays.map((_, i) =>
-            array.map((item) =>
-                item[i]
-            )
-        );
-        while(array.length > maxLength) array.length--;
-        return array;
+    zip:function(array){
+        var result = []
+        for(var i = 0; i < array[0].length; i++){
+            result[i] = [];
+            for(var j  = 0; j < array.length; i++){
+                result[i][j] = array[j][i]
+            }
+        }
+        return result;
     },
     countBy:function(collection, predicate){
         let object = {};
         predicate = this.iteratee(predicate);
-        collection = collection.object(it => predicate(it));
-        for(let i = 0; i < collection.length; i++){
-            if(collection[i] in object) object[collection[i]]++;
-            else object[collection[i]] = 1;
-        }
+        collection.forEach(item => {
+            let key = predicate(item);
+            if(!object[key]){
+                object[key] = 1;
+            }else{
+                object[key]++
+            }
+        });
         return object;
     },
     every:function(collection, predicate){
