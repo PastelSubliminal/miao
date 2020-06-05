@@ -430,31 +430,27 @@ var pastelsubliminal = {
         }
         return object;
     },
-    // findKey:function(object, predicate){
-
-    // },
-    // forIn:function(object, predicate){
-
-    // },
-    // forInRight(object, predicate){
-
-    // },
-    // functions:function(object){
-
-    // },
-    get:function(object, path, defaultValue = undefined){
+    _get: function (object, path, defaultValue = undefined) {
         let pathArr;
         //path可能为数组或字符串;
-        if(this.isArray(path)){
+        if (this.isArray(path)) {
             pathArr = path.slice();
-        }else{
+        }
+        else {
             pathArr = this.toPath(path);
         }
-        for(key of pathArr){
-            if(object === undefined) return defaultValue;
+        for (key of pathArr) {
+            if (object === undefined)
+                return defaultValue;
             object = object[key];
         }
         return object;
+    },
+    get get() {
+        return this._get;
+    },
+    set get(value) {
+        this._get = value;
     },
     toPath:function(value){
         return value.split(/\.|\[|\]\.|\]\[/g);
