@@ -1,4 +1,10 @@
 var pastelsubliminal = {
+    /**
+     * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
+     * @param {Array} array The array to process.
+     * @param {Number} size The length of each chunk
+     * @returns {array} Returns the new array of chunks.
+     */
     chunk:function(array, size=1){
         let index = 0;
         let resIndex = 0;
@@ -8,6 +14,11 @@ var pastelsubliminal = {
         }
         return result;
     },
+    /**
+     * Creates an array with all falsey values removed. The values false, null, 0, "", undefined, and NaN are falsey.
+     * @param {Array} array
+     * @returns {Array} Returns the new array of filtered values.
+     */
     compact:function(array){
         let result = [];
         for(let i = 0; i < array.length; i++){
@@ -15,6 +26,12 @@ var pastelsubliminal = {
         }
         return result;
     },
+    /**
+     * Creates an array of array values not included in the other given arrays using SameValueZero for equality comparisons. The order and references of result values are determined by the first array.
+     * @param {Array} array
+     * @param  {...Array} values
+     * @returns {Array} Returns the new array of filtered values.
+     */
     difference:function(array, ...value){
         let result = array.slice();
         value = [].concat(...value);
@@ -547,14 +564,14 @@ var pastelsubliminal = {
         return false
       },
     iteratee:function(value) {
-        if (isString(value)) {
-          return property(value)
+        if (this.isString(value)) {
+          return this.property(value)
           // Array也是object对象, 所以在判断是否为object前判断
-        } else if (isArray(value)) {
-          return matchesProperty(value[0], value[1])
+        } else if (this.isArray(value)) {
+          return this.matchesProperty(value[0], value[1])
           // 为object的情况(排除null和function)
-        } else if (isObjectLike(value)) {
-          return matches(value)
+        } else if (this.isObjectLike(value)) {
+          return this.matches(value)
         }
 
         return value
