@@ -589,23 +589,23 @@ var pastelsubliminal = {
     //     return value
     //   },
     iteratee:function(value){
-        if(Object.prototype.toString.call(iteratee) == '[object Function]'){
-            return iteratee;
+        if(Object.prototype.toString.call(value) == '[object Function]'){
+            return value;
         }
-        if(Object.prototype.toString.call(iteratee) == '[object String]'){
+        if(Object.prototype.toString.call(value) == '[object String]'){
             return function(object){
-                return nonmit.get(object, iteratee);
+                return nonmit.get(object, value);
             }
         }
-        if(Object.prototype.toString.call(iteratee) == '[object Array]'){
+        if(Object.prototype.toString.call(value) == '[object Array]'){
             return function(object){
-                return object[iteratee[0]] == iteratee[1];
+                return object[value[0]] == value[1];
             }
         }
-        if(Object.prototype.toString.call(iteratee) == '[object Object]'){
+        if(Object.prototype.toString.call(value) == '[object Object]'){
             return function(object){
-                for(let i in iteratee){
-                    if(object[i] != iteratee[i])
+                for(let i in value){
+                    if(object[i] != value[i])
                         return false;
                 }
                 return true;
