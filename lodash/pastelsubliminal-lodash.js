@@ -61,9 +61,10 @@ var pastelsubliminal = {
         var result = [];
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i]) === false){
-                return array.slice(0, i);
+                result.push(array.slice(0, i));
             }
         }
+        return result;
     },
     dropWhile:function(array, predicate){
         predicate = this.iteratee(predicate);
@@ -441,9 +442,23 @@ var pastelsubliminal = {
     // functions:function(object){
 
     // },
-    // get:function(object, path, [defaultValue]){
-
-    // },
+    get:function(object, path, [defaultValue]){
+        let pathArr;
+        //path可能为数组或字符串;
+        if(this.isArray(path)){
+            pathArr = path.slice();
+        }else{
+            pathArr = toPath(path);
+        }
+        for(key of pathArr){
+            if(object === undefined) return defaultValue;
+            object = object[key];
+        }
+        return object;
+    },
+    toPath:function(value){
+        return value.split(/\.|\[|\]\.|\]\[/g);
+    }
     // has:function(object, path){
 
     // },
@@ -558,7 +573,7 @@ var pastelsubliminal = {
       },
     iteratee:function(value) {
         if (this.isString(value)) {
-          return property(value)
+          return this.property(value)
           // Array也是object对象, 所以在判断是否为object前判断
         } else if (this.isArray(value)) {
           return this.matchesProperty(value[0], value[1])
