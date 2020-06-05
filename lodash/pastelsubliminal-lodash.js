@@ -539,6 +539,25 @@ var pastelsubliminal = {
     identity: function(...args) {
         return args[0];
     },
+    isObjectLike:function(value) {
+        if (typeof value === 'object' && value !== null) {
+          return true
+        }
+        return false
+      },
+    iteratee:function(value) {
+        if (isString(value)) {
+          return property(value)
+          // Array也是object对象, 所以在判断是否为object前判断
+        } else if (isArray(value)) {
+          return matchesProperty(value[0], value[1])
+          // 为object的情况(排除null和function)
+        } else if (isObjectLike(value)) {
+          return matches(value)
+        }
+
+        return value
+      },
     // iteratee:function(func = this.identity) {
     //     if (typeof func === "string") {
     //       return this.property(func);
@@ -552,12 +571,12 @@ var pastelsubliminal = {
     //       return this.matches(func);
     //     }
     // },
-    iteratee:function(func){
-        if(typeof func === "string"){
-            func = item => item[func];
-        }
-        return func
-    },
+    // iteratee:function(func){
+    //     if(typeof func === "string"){
+    //         func = item => item[func];
+    //     }
+    //     return func
+    // },
     filter:function(array, test){
         var passed = [];
         for(var i = 0; i < array.length; i++){
