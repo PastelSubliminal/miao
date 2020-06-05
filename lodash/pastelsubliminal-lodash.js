@@ -541,8 +541,9 @@ var pastelsubliminal = {
         return array = array.concat(...value);
     },
     matches:function(source){
-        return object =>
-            this.isMatch(object, source);
+        return function(object){
+            return this.isMatch(object, source);
+        }
     },
     property:function(path){
         return function(object){
