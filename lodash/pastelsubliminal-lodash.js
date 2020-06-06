@@ -655,7 +655,12 @@ var pastelsubliminal = {
     },
     unary:function(func){
         return function(arg){
-            return func(ary);
+            return func(arg);
         }
-    }
+    },
+    flip:function(func){
+        return function(...args){
+            return func(...args.reverse());
+        }
+    },
 }
