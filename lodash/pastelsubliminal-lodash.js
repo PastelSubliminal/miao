@@ -652,5 +652,10 @@ var pastelsubliminal = {
             current = combine(current, array[i])
         }
         return current;
+    },
+    unary:function(func){
+        return function(arg){
+            return func(ary);
+        }
     }
 }
