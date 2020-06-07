@@ -1,4 +1,10 @@
 var pastelsubliminal = {
+    compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
+    , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
+    , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
+    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
+    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues, omit, pick, result, set, values, escape, pad, padEnd, padStart, repeat, unescape, times, propertyOf, memoize, once, matches, uniqueId, cloneDeep,
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
      * @param {Array} array The array to process.
@@ -241,7 +247,7 @@ var pastelsubliminal = {
     },
     every:function(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if(!iteratee(predicate)(array[i], i, array)) return false;
+            if(!(this.iteratee(predicate)(array[i], i, array))) return false;
         }
         return true;
     },
@@ -310,9 +316,9 @@ var pastelsubliminal = {
     // reduceRight(collection, iteratee=, accumulator){
 
     // },
-    // reject(collection, predicate){
-
-    // },
+    reject(collection, predicate){
+        return this.filter(collection, negate(predicate));
+    },
     // sample(collection){
 
     // },
@@ -323,7 +329,10 @@ var pastelsubliminal = {
         return collection.length || Object.keys(collection).length;
     },
     some(collection, predicate){
-        predicate = this.iteratee(predicate);
+        for(let i = 0; i < collection.length; i++){
+            if((this.iteratee(predicate)(array[i], i, array))) return true;
+        }
+        return false;
     },
     // sortBy(collection, predicate){
 
@@ -578,7 +587,12 @@ var pastelsubliminal = {
     },
     // negate(predicate)
     // once(func)
-    // spread(func, [start=0])
+    spread:function(func, start=0){
+        return function(){
+            //调用原函数
+            return func(...ary);
+        }
+    },
     // curry(func, [arity=func.length])
     // memoize(func, [resolver])
     // constant(value)
@@ -658,9 +672,23 @@ var pastelsubliminal = {
             return func(arg);
         }
     },
+    negate:function(func){
+        return function(...args){
+            return !func(...args);
+        }
+    },
     flip:function(func){
         return function(...args){
             return func(...args.reverse());
         }
+    },
+    // spread:function(func){
+    //     return function(ary){
+    //         //return func.apply(null, ary);
+    //         return func(...ary);
+    //     }
+    // },
+    spread:function(func, ary){
+            return func(...ary);
     },
 }
