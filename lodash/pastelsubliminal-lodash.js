@@ -590,7 +590,9 @@ var pastelsubliminal = function() {
             return func(...ary);
         }
     }
-    // curry(func, [arity=func.length])
+    function curry(func, arity=func.length){
+
+    }
     // memoize(func, [resolver])
     // constant(value)
     // propertyOf(object)
@@ -688,4 +690,4 @@ var pastelsubliminal = function() {
     function spread(func, ary){
             return func(...ary);
     }
-}
+}();
