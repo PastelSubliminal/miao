@@ -572,21 +572,6 @@ var pastelsubliminal = function() {
     function concat(array, ...value){
         return array = array.concat(...value);
     }
-    function matches(source){
-        return function(obj){
-            for(var key in source){
-              if(obj[key] !== source[key]){
-                return false;
-              }
-            }
-            return true;
-        }
-    }
-    function property(str){
-        return function(obj){
-            return obj[str];
-          }
-    }
     // negate(predicate)
     // once(func)
     function spread(func, start=0){
@@ -601,11 +586,6 @@ var pastelsubliminal = function() {
     // memoize(func, [resolver])
     // constant(value)
     // propertyOf(object)
-    function matchesProperty(path, srcValue){
-        return function(object){
-            return isMatch(property(path)(object), srcValue);
-        }
-    }
 
     function identity(...args) {
         return args[0];
@@ -613,6 +593,24 @@ var pastelsubliminal = function() {
     function isObjectLike(value) {
         return typeof value == "object" && value !== null;
       }
+    function property(str){
+        return function(obj){
+        return obj[str];
+        }
+    }
+    function matches(source){
+        return function(obj){
+            for(var key in source){
+              if(obj[key] !== source[key]){
+                return false;
+              }
+            }
+            return true;
+        }
+    }
+    function matchesProperty(ary){
+            return matches(fromPairs(chunk(ary, 2)));
+    }
     function iteratee(predicate){
         if(typeof predicate === "string"){
             predicate = property(predicate);
@@ -626,6 +624,7 @@ var pastelsubliminal = function() {
           return predicate;
     }
     function filter(array, test){
+        test = iteratee(test);
         var passed = [];
         for(var i = 0; i < array.length; i++){
             if(test(array[i]))
