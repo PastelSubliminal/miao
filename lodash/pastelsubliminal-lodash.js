@@ -187,19 +187,21 @@ var pastelsubliminal = function() {
     }
     function uniqBy(array, predicate){
         var result = [];
+        var compare = []
         predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
-            if(!result.includes(predicate(array[i]))){
+            if(!compare.includes(predicate(array[i]))){
                 result.push(array[i]);
+                compare.push(predicate(array[i]))
             }
         }
         return result;
     }
     function unzip(array){
-        var result = []
+        var result = [];
         for(var i = 0; i < array[0].length; i++){
             result[i] = [];
-            for(var j  = 0; j < array.length; i++){
+            for(var j  = 0; j < array.length; j++){
                 result[i][j] = array[j][i]
             }
         }
@@ -223,7 +225,7 @@ var pastelsubliminal = function() {
         var result = []
         for(var i = 0; i < array[0].length; i++){
             result[i] = [];
-            for(var j  = 0; j < array.length; i++){
+            for(var j  = 0; j < array.length; j++){
                 result[i][j] = array[j][i]
             }
         }
@@ -242,9 +244,9 @@ var pastelsubliminal = function() {
         });
         return object;
     }
-    function every(collection, predicate){
-        for(let i = 0; i < collection.length; i++){
-            if(!(iteratee(predicate)(array[i], i, array))) return false;
+    function every(ary, predicate){
+        for(let i = 0; i < ary.length; i++){
+            if(!(iteratee(predicate)(ary[i], i,))) return false;
         }
         return true;
     }
