@@ -266,13 +266,21 @@ var pastelsubliminal = function() {
     function flatMap(collection, iteratee){
         return collection.flatMap(iteratee);
     }
-    function flatMapDepth(collection, iteratee, depth=1){
-        return collection(collection.map(collection, iteratee), n);
+    function flatMapDepth(collection, predicate, depth=1){
+        predicate = iteratee(predicate);
+        // return collection(collection.map(collection, iteratee), n);
     }
-    function forEach(collection, iteratee){
-
+    function forEach(collection, predicate){
+        predicate = iteratee(predicate);
+        for(let key of object.keys(collection)){
+            if(predicate(collection[key], key, collection) == false){
+                break;
+            }
+        }
+        return collection
     }
     function groupBy(ary, f){
+        f = iteratee(f);
         var result = {};
         ary.forEach(item =>{
             var key = f(item);
@@ -302,9 +310,13 @@ var pastelsubliminal = function() {
         })
         return result;
     }
-    function map(collection, predicate){
-        predicate = iteratee(predicate);
-
+    function map(collection, transform){
+        var mapped = [];
+        transform = iteratee(transform)
+        for(key in collection){
+            mapped.push(transform(collection[key], key, collection))
+        }
+        return mapped;
     }
     // partition(collection, predicate){
 
@@ -617,11 +629,11 @@ var pastelsubliminal = function() {
         if(typeof predicate === "string"){
             predicate = property(predicate);
           }
-          if(typeof predicate === "object"){
-            predicate = matches(predicate);
-          }
           if(typeof predicate === "array"){
             predicate = matchesProperty(predicate)
+          }
+          if(typeof predicate === "object"){
+            predicate = matches(predicate);
           }
           return predicate;
     }
@@ -634,13 +646,7 @@ var pastelsubliminal = function() {
         }
         return passed;
     }
-    function map(array, transform){
-        var mapped = [];
-        for(var i = 0; i < array.length; i++){
-            mapped.push(transform(array[i]));
-        return mapped;
-        }
-    }
+
     function reduce(array, combine, start){
         var current = start;
         for(var i = 0; i < array.length; i++){
