@@ -1,19 +1,12 @@
-var pastelsubliminal = function(){
-    return{compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-        isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
-        , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
-        , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-        property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
-        , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues, omit, pick, result, set, values, escape, pad, padEnd, padStart, repeat, unescape, times, propertyOf, memoize, once, matches, uniqueId, cloneDeep}
-}
-var pastelsubliminal = {
+var pastelsubliminal = function() {
+    return{compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf, nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf,sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith,iteratee, toPath, get,property,matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor, assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues, omit, pick, result, set, values, escape, pad, padEnd, padStart, repeat, unescape, times, propertyOf, memoize, once, matches, uniqueId, cloneDeep}
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
      * @param {Array} array The array to process.
      * @param {Number} size The length of each chunk
      * @returns {array} Returns the new array of chunks.
      */
-    chunk:function(array, size = 1){
+    function chunk(array, size=1){
         let index = 0;
         let resIndex = 0;
         let result = new Array(Math.ceil(array.length / size));
@@ -21,44 +14,44 @@ var pastelsubliminal = {
             result[resIndex++] = array.slice(i, i + size);
         }
         return result;
-    },
+    }
     /**
      * Creates an array with all falsey values removed. The values false, null, 0, "", undefined, and NaN are falsey.
      * @param {Array} array
      * @returns {Array} Returns the new array of filtered values.
      */
-    compact:function(array){
+    function compact(array){
         let result = [];
         for(let i = 0; i < array.length; i++){
             if(array[i]) result.push(array[i]);
         }
         return result;
-    },
+    }
     /**
      * Creates an array of array values not included in the other given arrays using SameValueZero for equality comparisons. The order and references of result values are determined by the first array.
      * @param {Array} array
      * @param  {...Array} values
      * @returns {Array} Returns the new array of filtered values.
      */
-    difference:function(array, ...value){
+    function difference(array, ...value){
         let result = array.slice();
         value = [].concat(...value);
         result = result.filter(n =>
             !value.includes(n)
             )
         return result;
-    },
-    drop:function(array, n=1){
+    }
+    function drop(array, n=1){
         if(n >= array.length) return [];
         return array.slice(n);
-    },
-    dropRight:function(array, n=1){
+    }
+    function dropRight(array, n=1){
         // if(n >= array.length) return [];
         // return array.reverse().slice(n).reverse();
         return array.length > n ? array.slice(0, array.length - n) : [];
-    },
-    dropRightWhile:function(array, predicate){
-        predicate = iteratee(predicate);
+    }
+    function dropRightWhile(array, predicate){
+        predicate = this.iteratee(predicate);
         var result = [];
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i]) === false){
@@ -66,92 +59,92 @@ var pastelsubliminal = {
             }
         }
         return result;
-    },
-    dropWhile:function(array, predicate){
-        predicate = iteratee(predicate);
+    }
+    function dropWhile(array, predicate){
+        predicate = this.iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i] === false)){
                 array.slice(i);
             }
         }
-    },
-    fill:function(array, value, start=0, end=array.length){
+    }
+    function fill(array, value, start=0, end=array.length){
         for(var i = start; i < end; i++){
             array[i] = value;
         }
         return array;
-    },
-    findIndex:function(array, predicate, fromIndex){
+    }
+    function findIndex(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-            predicate = iteratee(predicate);
+            predicate = this.iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
             return -1;
         }
-    },
-    findLastIndex:function(array, predicate, fromIndex){
+    }
+    function findLastIndex(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            predicate = iteratee(predicate);
+            predicate = this.iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
             return -1;
         }
-    },
-    head:function(array){
+    }
+    function head(array){
         if(array === []) return undefined;
         return array[0];
-    },
-    indexOf:function(array, value, fromIndex=0){
+    }
+    function indexOf(array, value, fromIndex=0){
         for(let i = fromIndex; i < array.length; i++){
             if(String(array[i]) == String(value)) return i;
         }
-    },
-    flatten:function(array){
+    }
+    function flatten(array){
         return array.flat();
-    },
-    flattenDeep:function(array){
+    }
+    function flattenDeep(array){
         return array.flat(Infinity);
-    },
-    flattenDepth:function(array, depth=1){
+    }
+    function flattenDepth(array, depth=1){
         return array.flat(depth);
-    },
-    fromPairs:function(pairs){
+    }
+    function fromPairs(pairs){
         let object = {}
         for(let[key, value] of pairs){
             object[key] = value;
         }
         return object;
-    },
-    initial:function(array){
+    }
+    function initial(array){
         return array.slice(0, -1)
-    },
-    intersection(...arrays){
+    }
+    function intersection(...arrays){
         return arrays[0].filter(item =>
             arrays.every(value =>
                 value.includes(item)
                 )
             );
-    },
-    join:function(array, separator=','){
+    }
+    function join(array, separator=','){
         return array.join(separator);
-    },
-    last:function(array){
+    }
+    function last(array){
         return array[array.length -1];
-    },
-    lastIndexOf:function(array, value, fromIndex=array.length-1){
+    }
+    function lastIndexOf(array, value, fromIndex=array.length-1){
         if(typeof(fromIndex) === "Undefined") return -1;
         for(var i = fromIndex; i >= 0; i--){
             if(String(array[i]) == String(value)) return i;
         }
         return -1;
-    },
-    nth:function(array, n=0){
+    }
+    function nth(array, n=0){
         if(n < 0) return array[array.length + n];
         return array[n];
-    },
-    pull:function(array, ...values){
+    }
+    function pull(array, ...values){
         let result = [];
         for(let value of array){
             if(values.indexOf(value) == -1){
@@ -159,29 +152,29 @@ var pastelsubliminal = {
             }
         }
         return result;
-    },
-    reverse:function(array){
+    }
+    function reverse(array){
         var result = [];
         array.forEach(element =>{
             result.unshift(element);
         })
         return result;
-    },
-    sortedIndex:function(array, value){
+    }
+    function sortedIndex(array, value){
         for(let i = 0; i < array.length; i++){
             if(array[i] >= value) return i;
         }
-    },
-    union:function(...arrays){
-        return Array.from(new Set(flattenDeep(arrays)));
-    },
-    // unionBy:function(...arrays, predicate){
-    //     predicate = iteratee(predicate);
+    }
+    function union(...arrays){
+        return Array.from(new Set(this.flattenDeep(arrays)));
+    }
+    //function unionBy(...arrays, predicate){
+    //     predicate = this.iteratee(predicate);
     //     var result = [];
 
 
-    // },
-    uniq:function(array){
+    // }
+    function uniq(array){
         var result = [];
         for(var item of array){
             if(!result.includes(item)){
@@ -189,18 +182,18 @@ var pastelsubliminal = {
             }
         }
         return result;
-    },
-    uniqBy:function(array, predicate){
+    }
+    function uniqBy(array, predicate){
         var result = [];
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(!result.includes(predicate(array[i]))){
                 result.push(array[i]);
             }
         }
         return result;
-    },
-    unzip:function(array){
+    }
+    function unzip(array){
         var result = []
         for(var i = 0; i < array[0].length; i++){
             result[i] = [];
@@ -209,8 +202,8 @@ var pastelsubliminal = {
             }
         }
         return result;
-    },
-    without:function(array, ...values){
+    }
+    function without(array, ...values){
         let result = [];
         for(let item of array){
             if(!values.includes(item)){
@@ -218,13 +211,13 @@ var pastelsubliminal = {
             }
         }
         return result;
-    },
-    xor:function(...arrays){
+    }
+    function xor(...arrays){
         let array = arrays.flat();
         return array.filter((item) =>
             array.lastIndexOf(item) === array.indexOf(item));
-    },
-    zip:function(array){
+    }
+    function zip(array){
         var result = []
         for(var i = 0; i < array[0].length; i++){
             result[i] = [];
@@ -233,10 +226,10 @@ var pastelsubliminal = {
             }
         }
         return result;
-    },
-    countBy:function(collection, predicate){
+    }
+    function countBy(collection, predicate){
         let object = {};
-        predicate = iteratee(predicate);
+        predicate = this.iteratee(predicate);
         collection.forEach(item => {
             let key = predicate(item);
             if(!object[key]){
@@ -246,36 +239,36 @@ var pastelsubliminal = {
             }
         });
         return object;
-    },
-    every:function(collection, predicate){
+    }
+    function every(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if(!(iteratee(predicate)(array[i], i, array))) return false;
+            if(!(this.iteratee(predicate)(array[i], i, array))) return false;
         }
         return true;
-    },
-    filter:function(collection, predicate){
+    }
+    function filter(collection, predicate){
         let result = [];
         collection.forEach(element => {
             if(iteratee(predicate)(element)) result.push(element);
         });
         return result;
-    },
-    find:function(collection, predicate, fromIndex=0){
-        predicate = iteratee(predicate);
+    }
+    function find(collection, predicate, fromIndex=0){
+        predicate = this.iteratee(predicate);
         for(let i = fromIndex; i < collection.length; i++){
             if(predicate(collection[i])) return collection[i];
         }
-    },
-    flatMap(collection, iteratee){
+    }
+    function flatMap(collection, iteratee){
         return collection.flatMap(iteratee);
-    },
-    flatMapDepth(collection, iteratee, depth=1){
+    }
+    function flatMapDepth(collection, iteratee, depth=1){
         return collection(collection.map(collection, iteratee), n);
-    },
-    forEach(collection, iteratee){
+    }
+    function forEach(collection, iteratee){
 
-    },
-    groupBy:function(ary, f){
+    }
+    function groupBy(ary, f){
         var result = {};
         ary.forEach(item =>{
             var key = f(item);
@@ -285,9 +278,9 @@ var pastelsubliminal = {
             result[key].push(item);
         })
         return result;
-    },
+    }
     // groupBy(collection, predicate){
-    //     predicate = iteratee(predicate);
+    //     predicate = this.iteratee(predicate);
     //     let object = new Object;
     //     for(let i = 0; i < collection.length; i++){
     //         if(object[iteratee(collection[i])]){
@@ -297,102 +290,102 @@ var pastelsubliminal = {
     //         }
     //     }
     //     return object;
-    // },
-    keyBy:function(ary, key){
+    // }
+    function keyBy(ary, key){
         var result = {};
         ary.forEach(item =>{
             result[item[key]] = item;
         })
         return result;
-    },
-    map(collection, predicate){
-        predicate = iteratee(predicate);
+    }
+    function map(collection, predicate){
+        predicate = this.iteratee(predicate);
 
-    },
+    }
     // partition(collection, predicate){
 
-    // },
+    // }
     // reduce(collection, predicate, accumulator){
 
-    // },
+    // }
     // reduceRight(collection, iteratee=, accumulator){
 
-    // },
-    reject(collection, predicate){
-        return filter(collection, negate(predicate));
-    },
+    // }
+    function reject(collection, predicate){
+        return this.filter(collection, negate(predicate));
+    }
     // sample(collection){
 
-    // },
+    // }
     // shuffle(collection){
 
-    // },
-    size(collection){
+    // }
+    function size(collection){
         return collection.length || Object.keys(collection).length;
-    },
-    some(collection, predicate){
+    }
+    function some(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if((iteratee(predicate)(array[i], i, array))) return true;
+            if((this.iteratee(predicate)(array[i], i, array))) return true;
         }
         return false;
-    },
+    }
     // sortBy(collection, predicate){
 
-    // },
+    // }
     // defer(func, args){
 
-    // },
+    // }
     // delay(func, wait, args){
 
-    // },
-    isArguments:function(value){
+    // }
+    function isArguments(value){
         return Object.prototype.toString.call(value) === "[object Arguement]";
-    },
-    isArray:function(value){
+    }
+    function isArray(value){
         return Array.isArray(value);
-    },
-    isBoolean:function(value){
+    }
+    function isBoolean(value){
         return Object.prototype.toString.call(value) === "[object Boolean]";
-    },
-    isDate:function(value){
+    }
+    function isDate(value){
         return Object.prototype.toString.call(value) === "[object Date]";
-    },
-    isElement:function(value){
+    }
+    function isElement(value){
         return Object.prototype.toString.call(value) === "[object Element]";
-    },
-    isEmpty:function(value){
+    }
+    function isEmpty(value){
         let i = 0;
         for(let key in value){
             i++
         }
         return i == 0;
-    },
-    isEqual:function(value, other){
+    }
+    function isEqual(value, other){
         if(value === other) return true;
         if(value === null || other === null || typeof value !== "object" || typeof other !== "object") return false;
 
         let keysVal = Object.keys(value), keysOth = Object.keys(other);
         if(keysVal.length !== keysOth.length) return false;
         for(let key of keysVal){
-            if(!keysOth.includes(key) || !isEqual(value[key], other[key])) return false;
+            if(!keysOth.includes(key) || !this.isEqual(value[key], other[key])) return false;
         }
         return true;
-    },
-    // isError:function(value){
+    }
+    //function isError(value){
 
-    // },
-    // isFinite:function(value){
+    // }
+    //function isFinite(value){
 
-    // },
-    // isFunction:function(value){
+    // }
+    //function isFunction(value){
 
-    // },
-    isMatch:function(object, source, customizer){
+    // }
+    function isMatch(object, source, customizer){
         if(object === source) return true;
         if(object == undefined) return false;
         for(let key of Object.keys(source)){
-            if(isObjectLike(source[key])){
-                if(!isMatch(object[key], source[key])){
+            if(this.isObjectLike(source[key])){
+                if(!this.isMatch(object[key], source[key])){
                     return false;
                 }
             }else{
@@ -402,85 +395,85 @@ var pastelsubliminal = {
             }
         }
         return true;
-    },
-    isNaN:function(value){
+    }
+    function isNaN(value){
         return Object.prototype.toString.call(value) === "[object Number]" && isNaN(value);
-    },
-    // isNil:function(value){
+    }
+    //function  isNil(value){
 
-    // },
-    isNull:function(value){
+    // }
+    function isNull(value){
         return value === null;
-    },
-    isNumber:function(value){
+    }
+    function isNumber(value){
         return typeof value === "number";
-    },
-    // isObject:function(value){
+    }
+    //function isObject(value){
 
-    // },
-    // isRegExp:function(value){
+    // }
+    //function  isRegExp(value){
 
-    // },
-    isString:function(value){
+    // }
+    function isString(value){
         return typeof val == "string" || (isObjectLike(val) && nativeToString(val) == "[object String]");
-    },
-    // isUndefined:function(value){
+    }
+    //function isUndefined(value){
 
-    // },
-    // toArray:function(value){
+    // }
+    //function toArray(value){
 
-    // },
-    ceil:function(number, precision=0){
+    // }
+    function ceil(number, precision=0){
         var t = Math.pow(10, precision);
         return Math.round(number * t ) / t;
-    },
-    max:function(array){
+    }
+    function max(array){
         if(!array || array.length == 0) return undefined;
          return Math.max(...array);
-    },
-    // maxBy:function(array, predicate){
+    }
+    //function maxBy(array, predicate){
 
-    // },
-    min:function(array){
+    // }
+    function min(array){
         if(!array || array.length == 0) return undefined;
         return Math.min(...array);
-    },
-    round:function(number, precision=0){
+    }
+    function round(number, precision=0){
         var t = Math.pow(10, precision);
         return Math.round(number * t ) / t;
-    },
-    // sumBy:function(array, predicate){
+    }
+    //function sumBy(array, predicate){
 
-    // },
-    // random:function(lower=0, upper=1, floating){
+    // }
+    //function random(lower=0, upper=1, floating){
 
-    // },
-    // assignIn:function(object, sources){
+    // }
+    //function assignIn(object, sources){
 
-    // },
-    defaults:function(object, sources){
+    // }
+    function defaults(object, sources){
         for(var key in sources){
             if(!object.matchesProperty(key)){
                 object[key] = sources[key];
             }
         }
         return object;
-    },
-    // findKey:function(object, predicate){
+    }
+    //function findKey(object, predicate){
 
-    // },
-    // forIn:function(object, predicate){
+    // }
+    //function forIn(object, predicate){
 
-    // },
+    // }
     // forInRight(object, predicate){
 
-    // },
-    // functions:function(object){
+    // }
+    //function functions(object){
 
-    // },
-    get:function(object, path, defaultValue){
+    // }
+    function get(object, path, defaultValue){
         if (isString(path)) {
-            path = toPath(path);
+            path = this.toPath(path);
           }
           for (let i = 0; i < path.length; i++) {
             if (object == undefined) {
@@ -492,138 +485,138 @@ var pastelsubliminal = {
             return defaultValue;
           }
           return object;
-    },
-    toPath:function(value){
+    }
+    function toPath(value){
         return value.split(/\.|\[|\]\.|\]\[/g);
-    },
-    // has:function(object, path){
+    }
+    //function has(object, path){
 
-    // },
-    // invert:function(object){
+    // }
+    //function invert(object){
 
-    // },
-    // invoke:function(object, path, [args]){
+    // }
+    //function invoke(object, path, [args]){
 
-    // },
-    // keys:function(object){
+    // }
+    //function keys(object){
 
-    // },
-    // mapKeys:function(object, predicate){
+    // }
+    //function mapKeys(object, predicate){
 
-    // },
-    // mapValues:function(object, predicate){
+    // }
+    //function mapValues(object, predicate){
 
-    // },
-    // merge:function(object, [sources]){
+    // }
+    //function merge(object, [sources]){
 
-    // },
-    // omit:function(object, [props]){
+    // }
+    //function omit(object, [props]){
 
-    // },
-    // pick:function(object, [props]){
+    // }
+    //function pick(object, [props]){
 
-    // },
-    // result:function(object, path, [defaultValue]){
+    // }
+    //function result(object, path, [defaultValue]){
 
-    // },
-    // set:function(object, path, value){
+    // }
+    //function set(object, path, value){
 
-    // },
-    toPairs:function(object){
+    // }
+    function toPairs(object){
         let result = [];
         for(let [key, value] of Object.entries(object)){
             result.push([key, value])
         }
-    },
-    // values:function(object){
+    }
+    //function values(object){
 
-    // },
-    // escape:function(string=''){
+    // }
+    //function escape(string=''){
 
-    // },
-    // pad:function(string='', length=0, chars=' '){
+    // }
+    //function pad(string='', length=0, chars=' '){
 
-    // },
-    // padEnd:function(string='', length=0, chars=' '){
+    // }
+    //function padEnd(string='', length=0, chars=' '){
 
-    // },
-    // padStart:function(string='', length=0, chars=' '){
+    // }
+    //function padStart(string='', length=0, chars=' '){
 
-    // },
-    // unescape:function(string=''){
+    // }
+    //function unescape(string=''){
 
-    // },
-    // bindAll:function(object, methodNames){
+    // }
+    //function bindAll(object, methodNames){
 
-    // },
-    // range:function([start=0], end, [step=1]){
+    // }
+    //function range([start=0], end, [step=1]){
 
-    // },
-    // mixin:function([object=lodash], source, [options={}]){
+    // }
+    //function mixin([object=lodash], source, [options={}]){
 
-    // },
-    // times:function(n, predicate){
+    // }
+    //function times(n, predicate){
 
-    // },
-    // uniqueId:function([prefix='']){
+    // }
+    //function uniqueId([prefix='']){
 
-    // },
-    // cloneDeep:function(value){
+    // }
+    //function cloneDeep(value){
 
-    // },
-    identity: function(...args) {
+    // }
+    function identity(...args) {
         return args[0];
-    },
-    concat:function(array, ...value){
+    }
+    function concat(array, ...value){
         return array = array.concat(...value);
-    },
-    matches:function(source){
+    }
+    function matches(source){
         return function(object){
-            return isMatch(object, source);
+            return this.isMatch(object, source);
         }
-    },
-    property:function(path){
+    }
+    function property(path){
         return function(object){
-            return get(object, path);
+            return this.get(object, path);
         }
-    },
+    }
     // negate(predicate)
     // once(func)
-    spread:function(func, start=0){
+    function spread(func, start=0){
         return function(){
             //调用原函数
             return func(...ary);
         }
-    },
+    }
     // curry(func, [arity=func.length])
     // memoize(func, [resolver])
     // constant(value)
     // propertyOf(object)
-    matchesProperty:function(path, srcValue){
+    function matchesProperty(path, srcValue){
         return function(object){
-            return isMatch(property(path)(object), srcValue);
+            return this.isMatch(this.property(path)(object), srcValue);
         }
-    },
+    }
 
-    identity: function(...args) {
+    function identity(...args) {
         return args[0];
-    },
-    isObjectLike:function(value) {
+    }
+    function isObjectLike(value) {
         return typeof value == "object" && value !== null;
-      },
-    // iteratee:function(value){
-    //     if(isString(value)){
-    //         return property(value);
+      }
+    //function iteratee(value){
+    //     if(this.isString(value)){
+    //         return this.property(value);
     //     }
-    //     if(isArray(value)){
-    //         return matchesProperty(value[0], value[1]);
+    //     if(this.isArray(value)){
+    //         return this.matchesProperty(value[0], value[1]);
     //     }
-    //     if(isObjectLike(value)){
-    //         return matches(value);
+    //     if(this.isObjectLike(value)){
+    //         return this.matches(value);
     //     }
     //     return value;
-    // },
-    iteratee:function(value){
+    // }
+    function iteratee(value){
         if(Object.prototype.toString.call(value) == '[object Function]'){
             return value;
         }
@@ -646,51 +639,51 @@ var pastelsubliminal = {
                 return true;
             }
         }
-    },
-    filter:function(array, test){
+    }
+    function filter(array, test){
         var passed = [];
         for(var i = 0; i < array.length; i++){
             if(test(array[i]))
                 passed.push(array[i]);
         }
         return passed;
-    },
-    map:function(array, transform){
+    }
+    function map(array, transform){
         var mapped = [];
         for(var i = 0; i < array.length; i++){
             mapped.push(transform(array[i]));
         return mapped;
         }
-    },
-    reduce:function(array, combine, start){
+    }
+    function reduce(array, combine, start){
         var current = start;
         for(var i = 0; i < array.length; i++){
             current = combine(current, array[i])
         }
         return current;
-    },
-    unary:function(func){
+    }
+    function unary(func){
         return function(arg){
             return func(arg);
         }
-    },
-    negate:function(func){
+    }
+    function negate(func){
         return function(...args){
             return !func(...args);
         }
-    },
-    flip:function(func){
+    }
+    function flip(func){
         return function(...args){
             return func(...args.reverse());
         }
-    },
-    // spread:function(func){
+    }
+    //function spread(func){
     //     return function(ary){
     //         //return func.apply(null, ary);
     //         return func(...ary);
     //     }
-    // },
-    spread:function(func, ary){
+    // }
+    function spread(func, ary){
             return func(...ary);
-    },
+    }
 }
