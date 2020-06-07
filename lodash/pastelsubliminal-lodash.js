@@ -1,17 +1,19 @@
+var pastelsubliminal = function(){
+    return{compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
+        isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
+        , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
+        , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
+        property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
+        , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues, omit, pick, result, set, values, escape, pad, padEnd, padStart, repeat, unescape, times, propertyOf, memoize, once, matches, uniqueId, cloneDeep}
+}
 var pastelsubliminal = {
-    compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
-    , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
-    , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
-    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues, omit, pick, result, set, values, escape, pad, padEnd, padStart, repeat, unescape, times, propertyOf, memoize, once, matches, uniqueId, cloneDeep,
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
      * @param {Array} array The array to process.
      * @param {Number} size The length of each chunk
      * @returns {array} Returns the new array of chunks.
      */
-    chunk:function(array, size=1){
+    chunk:function(array, size = 1){
         let index = 0;
         let resIndex = 0;
         let result = new Array(Math.ceil(array.length / size));
@@ -56,7 +58,7 @@ var pastelsubliminal = {
         return array.length > n ? array.slice(0, array.length - n) : [];
     },
     dropRightWhile:function(array, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         var result = [];
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i]) === false){
@@ -66,7 +68,7 @@ var pastelsubliminal = {
         return result;
     },
     dropWhile:function(array, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i] === false)){
                 array.slice(i);
@@ -81,7 +83,7 @@ var pastelsubliminal = {
     },
     findIndex:function(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-            predicate = this.iteratee(predicate);
+            predicate = iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
@@ -90,7 +92,7 @@ var pastelsubliminal = {
     },
     findLastIndex:function(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            predicate = this.iteratee(predicate);
+            predicate = iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
@@ -171,10 +173,10 @@ var pastelsubliminal = {
         }
     },
     union:function(...arrays){
-        return Array.from(new Set(this.flattenDeep(arrays)));
+        return Array.from(new Set(flattenDeep(arrays)));
     },
     // unionBy:function(...arrays, predicate){
-    //     predicate = this.iteratee(predicate);
+    //     predicate = iteratee(predicate);
     //     var result = [];
 
 
@@ -190,7 +192,7 @@ var pastelsubliminal = {
     },
     uniqBy:function(array, predicate){
         var result = [];
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(!result.includes(predicate(array[i]))){
                 result.push(array[i]);
@@ -234,7 +236,7 @@ var pastelsubliminal = {
     },
     countBy:function(collection, predicate){
         let object = {};
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         collection.forEach(item => {
             let key = predicate(item);
             if(!object[key]){
@@ -247,7 +249,7 @@ var pastelsubliminal = {
     },
     every:function(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if(!(this.iteratee(predicate)(array[i], i, array))) return false;
+            if(!(iteratee(predicate)(array[i], i, array))) return false;
         }
         return true;
     },
@@ -259,7 +261,7 @@ var pastelsubliminal = {
         return result;
     },
     find:function(collection, predicate, fromIndex=0){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(let i = fromIndex; i < collection.length; i++){
             if(predicate(collection[i])) return collection[i];
         }
@@ -285,7 +287,7 @@ var pastelsubliminal = {
         return result;
     },
     // groupBy(collection, predicate){
-    //     predicate = this.iteratee(predicate);
+    //     predicate = iteratee(predicate);
     //     let object = new Object;
     //     for(let i = 0; i < collection.length; i++){
     //         if(object[iteratee(collection[i])]){
@@ -304,7 +306,7 @@ var pastelsubliminal = {
         return result;
     },
     map(collection, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
 
     },
     // partition(collection, predicate){
@@ -317,7 +319,7 @@ var pastelsubliminal = {
 
     // },
     reject(collection, predicate){
-        return this.filter(collection, negate(predicate));
+        return filter(collection, negate(predicate));
     },
     // sample(collection){
 
@@ -330,7 +332,7 @@ var pastelsubliminal = {
     },
     some(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if((this.iteratee(predicate)(array[i], i, array))) return true;
+            if((iteratee(predicate)(array[i], i, array))) return true;
         }
         return false;
     },
@@ -372,7 +374,7 @@ var pastelsubliminal = {
         let keysVal = Object.keys(value), keysOth = Object.keys(other);
         if(keysVal.length !== keysOth.length) return false;
         for(let key of keysVal){
-            if(!keysOth.includes(key) || !this.isEqual(value[key], other[key])) return false;
+            if(!keysOth.includes(key) || !isEqual(value[key], other[key])) return false;
         }
         return true;
     },
@@ -389,8 +391,8 @@ var pastelsubliminal = {
         if(object === source) return true;
         if(object == undefined) return false;
         for(let key of Object.keys(source)){
-            if(this.isObjectLike(source[key])){
-                if(!this.isMatch(object[key], source[key])){
+            if(isObjectLike(source[key])){
+                if(!isMatch(object[key], source[key])){
                     return false;
                 }
             }else{
@@ -478,7 +480,7 @@ var pastelsubliminal = {
     // },
     get:function(object, path, defaultValue){
         if (isString(path)) {
-            path = this.toPath(path);
+            path = toPath(path);
           }
           for (let i = 0; i < path.length; i++) {
             if (object == undefined) {
@@ -577,12 +579,12 @@ var pastelsubliminal = {
     },
     matches:function(source){
         return function(object){
-            return this.isMatch(object, source);
+            return isMatch(object, source);
         }
     },
     property:function(path){
         return function(object){
-            return this.get(object, path);
+            return get(object, path);
         }
     },
     // negate(predicate)
@@ -599,7 +601,7 @@ var pastelsubliminal = {
     // propertyOf(object)
     matchesProperty:function(path, srcValue){
         return function(object){
-            return this.isMatch(this.property(path)(object), srcValue);
+            return isMatch(property(path)(object), srcValue);
         }
     },
 
@@ -610,14 +612,14 @@ var pastelsubliminal = {
         return typeof value == "object" && value !== null;
       },
     // iteratee:function(value){
-    //     if(this.isString(value)){
-    //         return this.property(value);
+    //     if(isString(value)){
+    //         return property(value);
     //     }
-    //     if(this.isArray(value)){
-    //         return this.matchesProperty(value[0], value[1]);
+    //     if(isArray(value)){
+    //         return matchesProperty(value[0], value[1]);
     //     }
-    //     if(this.isObjectLike(value)){
-    //         return this.matches(value);
+    //     if(isObjectLike(value)){
+    //         return matches(value);
     //     }
     //     return value;
     // },
