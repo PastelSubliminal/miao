@@ -582,7 +582,7 @@ var pastelsubliminal = function() {
             return true;
         }
     }
-    function property(path){
+    function property(str){
         return function(obj){
             return obj[str];
           }
