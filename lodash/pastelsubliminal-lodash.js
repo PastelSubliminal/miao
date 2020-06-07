@@ -574,8 +574,8 @@ var pastelsubliminal = function() {
     }
     function matches(source){
         return function(obj){
-            for(var key in target){
-              if(obj[key] !== target[key]){
+            for(var key in source){
+              if(obj[key] !== source[key]){
                 return false;
               }
             }
