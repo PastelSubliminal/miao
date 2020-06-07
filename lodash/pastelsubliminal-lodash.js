@@ -53,7 +53,7 @@ var pastelsubliminal = function() {
         return array.length > n ? array.slice(0, array.length - n) : [];
     }
     function dropRightWhile(array, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         var result = [];
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i]) === false){
@@ -63,7 +63,7 @@ var pastelsubliminal = function() {
         return result;
     }
     function dropWhile(array, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i] === false)){
                 array.slice(i);
@@ -78,7 +78,7 @@ var pastelsubliminal = function() {
     }
     function findIndex(array, predicate, fromIndex){
         for(var i = 0; i < array.length; i++){
-            predicate = this.iteratee(predicate);
+            predicate = iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
@@ -87,7 +87,7 @@ var pastelsubliminal = function() {
     }
     function findLastIndex(array, predicate, fromIndex){
         for(var i = array.length - 1; i >= 0; i--){
-            predicate = this.iteratee(predicate);
+            predicate = iteratee(predicate);
             if(predicate(array[i] === true)){
                 return i;
             }
@@ -168,10 +168,10 @@ var pastelsubliminal = function() {
         }
     }
     function union(...arrays){
-        return Array.from(new Set(this.flattenDeep(arrays)));
+        return Array.from(new Set(flattenDeep(arrays)));
     }
     //function unionBy(...arrays, predicate){
-    //     predicate = this.iteratee(predicate);
+    //     predicate = iteratee(predicate);
     //     var result = [];
 
 
@@ -187,7 +187,7 @@ var pastelsubliminal = function() {
     }
     function uniqBy(array, predicate){
         var result = [];
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(!result.includes(predicate(array[i]))){
                 result.push(array[i]);
@@ -231,7 +231,7 @@ var pastelsubliminal = function() {
     }
     function countBy(collection, predicate){
         let object = {};
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         collection.forEach(item => {
             let key = predicate(item);
             if(!object[key]){
@@ -244,7 +244,7 @@ var pastelsubliminal = function() {
     }
     function every(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if(!(this.iteratee(predicate)(array[i], i, array))) return false;
+            if(!(iteratee(predicate)(array[i], i, array))) return false;
         }
         return true;
     }
@@ -256,7 +256,7 @@ var pastelsubliminal = function() {
         return result;
     }
     function find(collection, predicate, fromIndex=0){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
         for(let i = fromIndex; i < collection.length; i++){
             if(predicate(collection[i])) return collection[i];
         }
@@ -282,7 +282,7 @@ var pastelsubliminal = function() {
         return result;
     }
     // groupBy(collection, predicate){
-    //     predicate = this.iteratee(predicate);
+    //     predicate = iteratee(predicate);
     //     let object = new Object;
     //     for(let i = 0; i < collection.length; i++){
     //         if(object[iteratee(collection[i])]){
@@ -301,7 +301,7 @@ var pastelsubliminal = function() {
         return result;
     }
     function map(collection, predicate){
-        predicate = this.iteratee(predicate);
+        predicate = iteratee(predicate);
 
     }
     // partition(collection, predicate){
@@ -314,7 +314,7 @@ var pastelsubliminal = function() {
 
     // }
     function reject(collection, predicate){
-        return this.filter(collection, negate(predicate));
+        return filter(collection, negate(predicate));
     }
     // sample(collection){
 
@@ -327,7 +327,7 @@ var pastelsubliminal = function() {
     }
     function some(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if((this.iteratee(predicate)(array[i], i, array))) return true;
+            if((iteratee(predicate)(array[i], i, array))) return true;
         }
         return false;
     }
@@ -369,7 +369,7 @@ var pastelsubliminal = function() {
         let keysVal = Object.keys(value), keysOth = Object.keys(other);
         if(keysVal.length !== keysOth.length) return false;
         for(let key of keysVal){
-            if(!keysOth.includes(key) || !this.isEqual(value[key], other[key])) return false;
+            if(!keysOth.includes(key) || !isEqual(value[key], other[key])) return false;
         }
         return true;
     }
@@ -386,8 +386,8 @@ var pastelsubliminal = function() {
         if(object === source) return true;
         if(object == undefined) return false;
         for(let key of Object.keys(source)){
-            if(this.isObjectLike(source[key])){
-                if(!this.isMatch(object[key], source[key])){
+            if(isObjectLike(source[key])){
+                if(!isMatch(object[key], source[key])){
                     return false;
                 }
             }else{
@@ -475,7 +475,7 @@ var pastelsubliminal = function() {
     // }
     function get(object, path, defaultValue){
         if (isString(path)) {
-            path = this.toPath(path);
+            path = toPath(path);
           }
           for (let i = 0; i < path.length; i++) {
             if (object == undefined) {
@@ -573,14 +573,19 @@ var pastelsubliminal = function() {
         return array = array.concat(...value);
     }
     function matches(source){
-        return function(object){
-            return this.isMatch(object, source);
+        return function(obj){
+            for(var key in target){
+              if(obj[key] !== target[key]){
+                return false;
+              }
+            }
+            return true;
         }
     }
     function property(path){
-        return function(object){
-            return this.get(object, path);
-        }
+        return function(obj){
+            return obj[str];
+          }
     }
     // negate(predicate)
     // once(func)
@@ -598,7 +603,7 @@ var pastelsubliminal = function() {
     // propertyOf(object)
     function matchesProperty(path, srcValue){
         return function(object){
-            return this.isMatch(this.property(path)(object), srcValue);
+            return isMatch(property(path)(object), srcValue);
         }
     }
 
@@ -608,41 +613,17 @@ var pastelsubliminal = function() {
     function isObjectLike(value) {
         return typeof value == "object" && value !== null;
       }
-    //function iteratee(value){
-    //     if(this.isString(value)){
-    //         return this.property(value);
-    //     }
-    //     if(this.isArray(value)){
-    //         return this.matchesProperty(value[0], value[1]);
-    //     }
-    //     if(this.isObjectLike(value)){
-    //         return this.matches(value);
-    //     }
-    //     return value;
-    // }
-    function iteratee(value){
-        if(Object.prototype.toString.call(value) == '[object Function]'){
-            return value;
-        }
-        if(Object.prototype.toString.call(value) == '[object String]'){
-            return function(object){
-                return nonmit.get(object, value);
-            }
-        }
-        if(Object.prototype.toString.call(value) == '[object Array]'){
-            return function(object){
-                return object[value[0]] == value[1];
-            }
-        }
-        if(Object.prototype.toString.call(value) == '[object Object]'){
-            return function(object){
-                for(let i in value){
-                    if(object[i] != value[i])
-                        return false;
-                }
-                return true;
-            }
-        }
+    function iteratee(predicate){
+        if(typeof predicate === "string"){
+            predicate = property(predicate);
+          }
+          if(typeof predicate === "object"){
+            predicate = matches(predicate);
+          }
+          if(typeof predicate === "array"){
+            predicate = matchesProperty(predicate)
+          }
+          return predicate;
     }
     function filter(array, test){
         var passed = [];
