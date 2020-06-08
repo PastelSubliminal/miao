@@ -76,19 +76,19 @@ var pastelsubliminal = function() {
         }
         return array;
     }
-    function findIndex(array, predicate, fromIndex){
-        for(var i = 0; i < array.length; i++){
-            predicate = iteratee(predicate);
-            if(predicate(array[i] === true)){
+    function findIndex(array, predicate, fromIndex=0){
+        predicate = iteratee(predicate);
+        for(var i = fromIndex; i < array.length; i++){
+            if(predicate(array[i]) === true){
                 return i;
             }
             return -1;
         }
     }
-    function findLastIndex(array, predicate, fromIndex){
-        for(var i = array.length - 1; i >= 0; i--){
+    function findLastIndex(array, predicate, fromIndex=array.length-1){
+        for(var i = fromIndex - 1; i >= 0; i--){
             predicate = iteratee(predicate);
-            if(predicate(array[i] === true)){
+            if(predicate(array[i]) === true){
                 return i;
             }
             return -1;
