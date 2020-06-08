@@ -427,7 +427,8 @@ var pastelsubliminal = function() {
         return true;
     }
     function isNaN(value){
-        return Object.prototype.toString.call(value) === "[object Number]" && isNaN(value);
+        //如果是new Number()构造出的数字，先将其转换为原始类型的数字
+        return isNumber(value) && +value !== +value;
     }
     //function  isNil(value){
 
