@@ -275,17 +275,26 @@ var pastelsubliminal = function() {
         var res = [];
         predicate = iteratee(predicate);
         collection.forEach(item =>{
-            res.push(flattenDeep(predicate(item)));
+            res.push(predicate(item));
         })
-        return res;
+        return flattenDeep(res);
     }
     function flatMapDepth(collection, predicate, depth=1){
+        var res = [];
         predicate = iteratee(predicate);
-        // return collection(collection.map(collection, iteratee), n);
-    }
+        collection.forEach(item =>{
+            res.push(predicate(item));
+        })
+        return res.flat(depth);
+    }/**
+     * 调用 iteratee 遍历 collection(集合) 中的每个元素， iteratee 调用3个参数： (value, index|key, collection)。 如果迭代函数（iteratee）显式的返回 false ，迭代会提前退出。注意: 与其他"集合"方法一样，类似于数组，对象的 "length" 属性也会被遍历。想避免这种情况，可以用 _.forIn 或者 _.forOwn 代替。
+     * @param {Array|Object} collection
+     * @param {Function} predicate
+     * @returns {*} 返回集合collection
+     */
     function forEach(collection, predicate){
         predicate = iteratee(predicate);
-        for(let key of object.keys(collection)){
+        for(let key of Object.keys(collection)){
             if(predicate(collection[key], key, collection) == false){
                 break;
             }
@@ -664,9 +673,17 @@ var pastelsubliminal = function() {
             return func(...ary);
         }
     }
-    function curry(func, arity=func.length){
-
+    //返回一个函数用于接收剩下的参数
+    function curry(func, length=func.length){
+        return function(...args){
+            if(args.length >= length){
+                return func(...args)
+            }else{
+                return curry(func.bind(null, ...args), length -args.length);
+            }
+        }
     }
+
     // memoize(func, [resolver])
     // constant(value)
     // propertyOf(object)
