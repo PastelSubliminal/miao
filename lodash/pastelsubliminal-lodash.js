@@ -1,6 +1,6 @@
 var pastelsubliminal = function() {
     return{
-        compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy
+        compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat
     }
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
@@ -52,6 +52,16 @@ var pastelsubliminal = function() {
         // return array.reverse().slice(n).reverse();
         return array.length > n ? array.slice(0, array.length - n) : [];
     }
+    // function dropRightWhile(array, predicate){
+    //     predicate = iteratee(predicate);
+    //     var result = [];
+    //     for(var i = array.length - 1; i >= 0; i--){
+    //         if(predicate(array[i]) === false){
+    //             result.push(array.slice(0, i - 1));
+    //         }
+    //     }
+    //     return result;
+    // }
     function dropRightWhile(array, predicate){
         predicate = iteratee(predicate);
         for(var i = array.length - 1; i >= 0; i--){
@@ -435,7 +445,7 @@ var pastelsubliminal = function() {
 
     // }
     function isString(val){
-        return typeof val == "string" || (isObjectLike(val) && nativeToString(val) == "[object String]");
+        return Object.prototype.toString.call(val) === "[object String]";
     }
     //function isUndefined(value){
 
