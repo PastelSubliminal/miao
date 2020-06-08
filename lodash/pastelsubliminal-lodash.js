@@ -55,9 +55,9 @@ var pastelsubliminal = function() {
     function dropRightWhile(array, predicate){
         predicate = iteratee(predicate);
         var result = [];
-        for(var i = 0; i < array.length; i++){
+        for(var i = array.length - 1; i >= 0; i--){
             if(predicate(array[i]) === false){
-                result.push(array.slice(0, i));
+                result.push(array.slice(0, i - 1));
             }
         }
         return result;
@@ -66,7 +66,7 @@ var pastelsubliminal = function() {
         predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
             if(predicate(array[i] === false)){
-                array.slice(i);
+                return array.slice(i);
             }
         }
     }
@@ -484,7 +484,7 @@ var pastelsubliminal = function() {
     function sum(array){
         var res = 0;
         for(var i = 0; i < array.length; i++){
-            res += i;
+            res += array[i];
         }
         return res
     }
