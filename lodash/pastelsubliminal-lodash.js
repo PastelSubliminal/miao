@@ -271,8 +271,13 @@ var pastelsubliminal = function() {
             if(predicate(collection[i])) return collection[i];
         }
     }
-    function flatMap(collection, iteratee){
-        return collection.flatMap(iteratee);
+    function flatMap(collection, predicate){
+        var res = [];
+        predicate = iteratee(predicate);
+        collection.forEach(item =>{
+            res.push(flattenDeep(predicate(item)));
+        })
+        return res;
     }
     function flatMapDepth(collection, predicate, depth=1){
         predicate = iteratee(predicate);
