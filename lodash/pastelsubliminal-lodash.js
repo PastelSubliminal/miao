@@ -487,6 +487,12 @@ var pastelsubliminal = function() {
     //function functions(object){
 
     // }
+    /**
+     * 根据 object对象的path路径获取值。 如果解析 value 是 undefined 会以 defaultValue 取代。
+     * @param {Object} object 要检索的对象。
+     * @param {Array|String} path 要获取属性的路径。
+     * @param {*} defaultValue 如果解析值是 undefined ，这值会被返回。
+     */
     function get(object, path, defaultValue){
         if (isString(path)) {
             path = toPath(path);
@@ -502,6 +508,19 @@ var pastelsubliminal = function() {
           }
           return object;
     }
+    /*
+        例子：
+        var object = { 'a': [{ 'b': { 'c': 3 } }] };
+
+        _.get(object, 'a[0].b.c');
+        // => 3
+
+        _.get(object, ['a', '0', 'b', 'c']);
+        // => 3
+
+        _.get(object, 'a.b.c', 'default');
+        // => 'default'
+    */
     function toPath(value){
         return value.split(/\.|\[|\]\.|\]\[/g);
     }
@@ -607,11 +626,35 @@ var pastelsubliminal = function() {
     function isObjectLike(value) {
         return typeof value == "object" && value !== null;
       }
+    /**
+     * 创建一个返回给定对象的 path 的值的函数。
+     * @param {String} str
+     * @returns {Function} 返回的新函数
+     */
     function property(str){
         return function(obj){
         return obj[str];
         }
     }
+    /*
+    例子：
+        var objects = [
+          { 'a': { 'b': 2 } },
+          { 'a': { 'b': 1 } }
+        ];
+
+        _.map(objects, _.property('a.b'));
+        // => [2, 1]
+
+        _.map(_.sortBy(objects, _.property(['a', 'b'])), 'a.b');
+        // => [1, 2]
+    */
+
+    /**
+     *创建一个深比较的方法来比较给定的对象和 source 对象。 如果给定的对象拥有相同的属性值返回 true，否则返回 false。注意: 创建的函数相当于 _.isMatch应用 source 。
+     * @param {Object} source
+     * @returns {Function}
+     */
     function matches(source){
         return function(obj){
             for(var key in source){
@@ -622,9 +665,40 @@ var pastelsubliminal = function() {
             return true;
         }
     }
-    function matchesProperty(ary){
-            return matches(fromPairs(chunk(ary, 2)));
+    /*
+        例子：
+        var objects = [
+          { 'a': 1, 'b': 2, 'c': 3 },
+          { 'a': 4, 'b': 5, 'c': 6 }
+        ];
+
+        _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
+        // => [{ 'a': 4, 'b': 5, 'c': 6 }]
+    */
+
+    /**
+     * 创建一个深比较的方法来比较给定对象的 path 的值是否是 Value。如果是返回 true，否则返回 false 。
+     * @param {Array|string} ary
+     * @returns {Function} 返回新的函数
+     */
+    // function matchesProperty(ary){
+    //     return matches(fromPairs(chunk(ary, 2)));
+    // }
+    function matchesProperty(path, value){
+        return function(obj){
+            return get(obj, path) === value;
+        }
     }
+    /*
+        例子：
+        var objects = [
+          { 'a': 1, 'b': 2, 'c': 3 },
+          { 'a': 4, 'b': 5, 'c': 6 }
+        ];
+
+        _.find(objects, _.matchesProperty('a', 4));
+        // => { 'a': 4, 'b': 5, 'c': 6 }
+    */
     function iteratee(predicate){
         if(typeof predicate === "string"){
             predicate = property(predicate);
