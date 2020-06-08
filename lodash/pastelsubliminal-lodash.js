@@ -54,13 +54,11 @@ var pastelsubliminal = function() {
     }
     function dropRightWhile(array, predicate){
         predicate = iteratee(predicate);
-        var result = [];
         for(var i = array.length - 1; i >= 0; i--){
             if(predicate(array[i]) === false){
-                result.push(array.slice(0, i - 1));
+               return array.slice(0, i + 1);
             }
         }
-        return result;
     }
     function dropWhile(array, predicate){
         predicate = iteratee(predicate);
