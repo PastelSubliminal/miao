@@ -436,7 +436,7 @@ var pastelsubliminal = function() {
     //function  isRegExp(value){
 
     // }
-    function isString(value){
+    function isString(val){
         return typeof val == "string" || (isObjectLike(val) && nativeToString(val) == "[object String]");
     }
     //function isUndefined(value){
@@ -538,9 +538,6 @@ var pastelsubliminal = function() {
             }
             object = object[path[i]];
           }
-          if (object == undefined) {
-            return defaultValue;
-          }
           return object;
     }
     /*
@@ -555,6 +552,11 @@ var pastelsubliminal = function() {
 
         _.get(object, 'a.b.c', 'default');
         // => 'default'
+    */
+   /**
+    * 转化 value 为属性路径的数组 。
+    * @param {*} value
+    * @returns {Array} 返回包含属性路径的数组。
     */
     function toPath(value){
         return value.split(/\.|\[|\]\.|\]\[/g);
