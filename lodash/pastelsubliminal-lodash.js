@@ -1,6 +1,6 @@
 var pastelsubliminal = function() {
     return{
-        compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches
+        compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy
     }
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
@@ -246,7 +246,7 @@ var pastelsubliminal = function() {
     }
     function every(ary, predicate){
         for(let i = 0; i < ary.length; i++){
-            if(!(iteratee(predicate)(ary[i], i,))) return false;
+            if(!(iteratee(predicate)(ary[i], i, ary))) return false;
         }
         return true;
     }
@@ -341,7 +341,7 @@ var pastelsubliminal = function() {
     }
     function some(collection, predicate){
         for(let i = 0; i < collection.length; i++){
-            if((iteratee(predicate)(array[i], i, array))) return true;
+            if((iteratee(predicate)(collection[i], i, collection))) return true;
         }
         return false;
     }
@@ -390,9 +390,15 @@ var pastelsubliminal = function() {
     //function isError(value){
 
     // }
-    //function isFinite(value){
-
-    // }
+    /**
+     * 检查 value 是否是原始有限数值。
+     * @param {*} value
+     * @returns {boolean} 如果 value 是一个有限数值，那么返回 true，否则返回 false。
+     */
+    function isFinite(value){
+        if(typeof(value) == "string") return false;
+        return Number(value) !== Infinity;
+    }
     //function isFunction(value){
 
     // }
@@ -439,17 +445,34 @@ var pastelsubliminal = function() {
     //function toArray(value){
 
     // }
+
+    /**
+     * 根据 precision（精度） 向上舍入 number。（ precision（精度）可以理解为保留几位小数。）
+     * @param {number} number 要向上舍入的值。
+     * @param {number} precision 要向上舍入精度。
+     */
     function ceil(number, precision=0){
         var t = Math.pow(10, precision);
-        return Math.round(number * t ) / t;
+        return Math.ceil(number * t ) / t;
     }
     function max(array){
         if(!array || array.length == 0) return undefined;
          return Math.max(...array);
     }
-    //function maxBy(array, predicate){
-
-    // }
+    /**
+     * 这个方法类似 _.max 除了它接受 iteratee 来调用 array中的每一个元素，来生成其值排序的标准。 iteratee 会调用1个参数: (value) 。
+     * @param {Array} array
+     * @param {Function} predicate
+     * @returns {*} 返回最大的值
+     */
+    function maxBy(array, predicate){
+        var res = [];
+        predicate = iteratee(predicate);
+        array.forEach(item => {
+            res.push(predicate(item));
+        });
+        return array[res.indexOf(max(res))];
+    }
     function min(array){
         if(!array || array.length == 0) return undefined;
         return Math.min(...array);
@@ -458,9 +481,21 @@ var pastelsubliminal = function() {
         var t = Math.pow(10, precision);
         return Math.round(number * t ) / t;
     }
-    //function sumBy(array, predicate){
-
-    // }
+    function sum(array){
+        var res = 0;
+        for(var i = 0; i < array.length; i++){
+            res += i;
+        }
+        return res
+    }
+    function sumBy(array, predicate){
+        var res = 0;
+        predicate = iteratee(predicate);
+        array.forEach(item => {
+            res += predicate(item);
+        });
+        return res;
+    }
     //function random(lower=0, upper=1, floating){
 
     // }
@@ -734,6 +769,7 @@ var pastelsubliminal = function() {
         }
     }
     function negate(func){
+        func = iteratee(func);
         return function(...args){
             return !func(...args);
         }
