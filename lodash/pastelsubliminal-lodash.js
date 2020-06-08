@@ -65,7 +65,7 @@ var pastelsubliminal = function() {
     function dropWhile(array, predicate){
         predicate = iteratee(predicate);
         for(var i = 0; i < array.length; i++){
-            if(predicate(array[i] === false)){
+            if(predicate(array[i]) === false){
                 return array.slice(i);
             }
         }
@@ -82,8 +82,8 @@ var pastelsubliminal = function() {
             if(predicate(array[i]) === true){
                 return i;
             }
-            return -1;
         }
+        return -1;
     }
     function findLastIndex(array, predicate, fromIndex=array.length-1){
         for(var i = fromIndex - 1; i >= 0; i--){
@@ -91,8 +91,8 @@ var pastelsubliminal = function() {
             if(predicate(array[i]) === true){
                 return i;
             }
-            return -1;
         }
+        return -1;
     }
     function head(array){
         if(array === []) return undefined;
