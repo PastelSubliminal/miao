@@ -399,15 +399,13 @@ var pastelsubliminal = function() {
         return i == 0;
     }
     function isEqual(value, other){
-        if(value === other) return true;
-        if(value === null || other === null || typeof value !== "object" || typeof other !== "object") return false;
-
-        let keysVal = Object.keys(value), keysOth = Object.keys(other);
-        if(keysVal.length !== keysOth.length) return false;
-        for(let key of keysVal){
-            if(!keysOth.includes(key) || !isEqual(value[key], other[key])) return false;
-        }
-        return true;
+        if(this.isFunction(value) && this.isFunction(other)){
+            return t1.toString() == t2.toString()
+          }else if(this.isObject(value) && this.isObject(other)) {
+            return this.ObjectCompare(value,other)
+          }else {
+            return this.sameValueZero(value,other)
+          }
     }
     //function isError(value){
 
@@ -766,9 +764,6 @@ var pastelsubliminal = function() {
      * @param {Array|string} ary
      * @returns {Function} 返回新的函数
      */
-    // function matchesProperty(ary){
-    //     return matches(fromPairs(chunk(ary, 2)));
-    // }
     function matchesProperty(path, value){
         return function(obj){
             return this.isEqual(this.get(obj, path), value)
