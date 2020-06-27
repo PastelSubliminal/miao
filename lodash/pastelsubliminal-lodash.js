@@ -398,33 +398,20 @@ var pastelsubliminal = function() {
         }
         return i == 0;
     }
-    function isEqual(val, other){
-        if (val === other) {
-            return true // 无法判断包装类型；
-          }
-          if (isNaN(val) && isNaN(other)) {
-            return true;
-          }
-          // deepcompare
-          if (isObjectLike(val) && isObjectLike(other)) {
-            let k1 = 0, k2 = 0;
+    function isEqual(val, other, customizer = undefined){
+        if (customizer == undefined) {
+            return isEqual(val, other);
+        }
+        let res = customizer(val, other);
+        if (res == undefined) {
             for (let k in val) {
-              k1++;
+                if (customizer(val[k], other[k])) {
+                    return true; // 不是很懂 not exacly clear
+                }
             }
-            for (let k in other) {
-              k2++;
-            }
-            if (k1 !== k2) {
-              return false;
-            }
-            for (let k in val) {
-              if (!isEqual(val[k], other[k])) {
-                return false;
-              }
-            }
-            return true;
-          }
-          return false;
+            return false;
+        }
+        return res;
     }
     //function isError(value){
 
@@ -568,20 +555,17 @@ var pastelsubliminal = function() {
      * @param {Array|String} path 要获取属性的路径。
      * @param {*} defaultValue 如果解析值是 undefined ，这值会被返回。
      */
-    function get(obj, path, defaultVal){
+    function get(object, path, defaultValue){
         if (isString(path)) {
             path = toPath(path);
           }
           for (let i = 0; i < path.length; i++) {
-            if (obj == undefined) {
-              return defaultVal;
+            if (object == undefined) {
+              return defaultValue;
             }
-            obj = obj[path[i]];
+            object = object[path[i]];
           }
-          if (obj == undefined) {
-            return defaultVal;
-          }
-          return obj;
+          return object;
     }
     /*
         例子：
