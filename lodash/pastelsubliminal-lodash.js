@@ -1,6 +1,6 @@
 var pastelsubliminal = function() {
     return{
-        compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat
+        compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat,pad
     }
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
@@ -622,6 +622,7 @@ var pastelsubliminal = function() {
         for(let [key, value] of Object.entries(object)){
             result.push([key, value])
         }
+        return result
     }
     //function values(object){
 
@@ -629,9 +630,25 @@ var pastelsubliminal = function() {
     //function escape(string=''){
 
     // }
-    //function pad(string='', length=0, chars=' '){
-
-    // }
+    function pad(string='', length=0, chars=' '){
+        if(string.length >= length){
+            return string;
+        }
+        let left = "";let right = "";
+        while(string.length + left.length + right.length < length){
+            left += chars;
+            right += chars;
+        }
+        let diff = left.length + right.length + string.length - length;
+        if(diff % 2 == 0){
+            left = left.slice(0, left.length - (diff / 2));
+            right = right.slice(0, right.length - (diff / 2));
+        }else{
+            left = left.slice(0, left.length - ((diff + 1) / 2));
+            right = right.slice(0, right.length - ((diff - 1)/ 2));
+        }
+        return left + string + right;
+    }
     //function padEnd(string='', length=0, chars=' '){
 
     // }
@@ -772,7 +789,7 @@ var pastelsubliminal = function() {
             predicate = property(predicate);
           }
           if(typeof predicate === "array"){
-            predicate = matchesProperty(predicate)
+            predicate = matchesProperty(predicate[0], predicate[1])
           }
           if(typeof predicate === "object"){
             predicate = matches(predicate);
