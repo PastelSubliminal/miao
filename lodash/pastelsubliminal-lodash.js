@@ -398,20 +398,25 @@ var pastelsubliminal = function() {
         }
         return i == 0;
     }
-    function isEqual(val, other, customizer = undefined){
-        if (customizer == undefined) {
-            return isEqual(val, other);
+    function isEqual(value, other){
+        if(value === other){
+            return true
         }
-        let res = customizer(val, other);
-        if (res == undefined) {
-            for (let k in val) {
-                if (customizer(val[k], other[k])) {
-                    return true; // 不是很懂 not exacly clear
-                }
+        if(isNaN(value) && isNaN(other)){
+            return true
+        }
+        if (isObjectLike(value) && isObjectLike(other)) {
+            if(value.length !== other.length){
+                return false
             }
-            return false;
+            for (let k in value) {
+              if (!isEqual(value[k], other[k])) {
+                return false;
+              }
+            }
+            return true;
         }
-        return res;
+        return false
     }
     //function isError(value){
 
