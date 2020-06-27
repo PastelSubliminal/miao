@@ -769,11 +769,10 @@ var pastelsubliminal = function() {
     // function matchesProperty(ary){
     //     return matches(fromPairs(chunk(ary, 2)));
     // }
-    function matchesProperty(path, srcValue){
-        return function (obj) {
-            let func = property(path);
-            return isEqual(func(obj), srcValue);
-          }
+    function matchesProperty(path, value){
+        return function(obj){
+            return this.isEqual(this.get(obj, path), value)
+        }
     }
     /*
         例子：
