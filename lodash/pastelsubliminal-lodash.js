@@ -398,14 +398,33 @@ var pastelsubliminal = function() {
         }
         return i == 0;
     }
-    function isEqual(value, other){
-        if(this.isFunction(value) && this.isFunction(other)){
-            return t1.toString() == t2.toString()
-          }else if(this.isObject(value) && this.isObject(other)) {
-            return this.ObjectCompare(value,other)
-          }else {
-            return this.sameValueZero(value,other)
+    function isEqual(val, other){
+        if (val === other) {
+            return true // 无法判断包装类型；
           }
+          if (isNaN(val) && isNaN(other)) {
+            return true;
+          }
+          // deepcompare
+          if (isObjectLike(val) && isObjectLike(other)) {
+            let k1 = 0, k2 = 0;
+            for (let k in val) {
+              k1++;
+            }
+            for (let k in other) {
+              k2++;
+            }
+            if (k1 !== k2) {
+              return false;
+            }
+            for (let k in val) {
+              if (!isEqual(val[k], other[k])) {
+                return false;
+              }
+            }
+            return true;
+          }
+          return false;
     }
     //function isError(value){
 
@@ -549,17 +568,20 @@ var pastelsubliminal = function() {
      * @param {Array|String} path 要获取属性的路径。
      * @param {*} defaultValue 如果解析值是 undefined ，这值会被返回。
      */
-    function get(object, path, defaultValue){
+    function get(obj, path, defaultVal){
         if (isString(path)) {
             path = toPath(path);
           }
           for (let i = 0; i < path.length; i++) {
-            if (object == undefined) {
-              return defaultValue;
+            if (obj == undefined) {
+              return defaultVal;
             }
-            object = object[path[i]];
+            obj = obj[path[i]];
           }
-          return object;
+          if (obj == undefined) {
+            return defaultVal;
+          }
+          return obj;
     }
     /*
         例子：
@@ -766,7 +788,7 @@ var pastelsubliminal = function() {
      */
     function matchesProperty(path, value){
         return function(obj){
-            return this.isEqual(this.get(obj, path), value)
+            return isEqual(get(obj, path), value)
         }
     }
     /*
@@ -784,15 +806,7 @@ var pastelsubliminal = function() {
             predicate = property(predicate);
           }
           if(typeof predicate === "array"){
-            // predicate = matchesProperty(predicate[0], predicate[1])
-            return function (object) {
-                for (var i = 0; i < args.length - 1; i += 2) {
-                    if (object[args[i]] !== args[i + 1]) {
-                        return false
-                    }
-                }
-                return true
-            }
+            predicate = matchesProperty(predicate[0], predicate[1])
           }
           if(typeof predicate === "object"){
             predicate = matches(predicate);
