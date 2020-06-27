@@ -718,7 +718,7 @@ var pastelsubliminal = function() {
      */
     function property(str){
         return function(obj){
-        return obj[str];
+        return get(obj, str);
         }
     }
     /*
