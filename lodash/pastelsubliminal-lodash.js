@@ -784,7 +784,15 @@ var pastelsubliminal = function() {
             predicate = property(predicate);
           }
           if(typeof predicate === "array"){
-            predicate = matchesProperty(predicate[0], predicate[1])
+            // predicate = matchesProperty(predicate[0], predicate[1])
+            return function (object) {
+                for (var i = 0; i < args.length - 1; i += 2) {
+                    if (object[args[i]] !== args[i + 1]) {
+                        return false
+                    }
+                }
+                return true
+            }
           }
           if(typeof predicate === "object"){
             predicate = matches(predicate);
