@@ -43,9 +43,27 @@ var pastelsubliminal = function() {
             )
         return result;
     }
-    function differenceBy(array, values, predicate){
-        predicate = iteratee(predicate);
-
+    function differenceBy(array, values){
+        if(Array.isArray(values.length - 1)){
+            return difference(array, ...values);
+        }
+        var identity = values.pop();
+        var func = iteratee(identity);
+        var res = [];
+        var newValues = flattenDeep(values);
+        for(let i = 0; i < array.length; i++){
+            for(let j = 0; j < newValues.length; j++){
+                var sign = true;
+                if(isEqual(func(array[i], func(newValues[j])))){
+                    sign = false;
+                    break;
+                }
+            }
+            if(sign == true){
+                res.push(array[i]);
+            }
+            return res;
+        }
     }
     function drop(array, n=1){
         if(n >= array.length) return [];
