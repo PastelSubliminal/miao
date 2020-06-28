@@ -1,6 +1,6 @@
 var pastelsubliminal = function() {
     return{
-        compact, chunk, difference, differenceBy, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat,pad,nativeToString
+        compact, chunk, difference, differenceBy, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union, unionBy, iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat,pad,nativeToString
     }
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
@@ -190,12 +190,19 @@ var pastelsubliminal = function() {
     function union(...arrays){
         return Array.from(new Set(flattenDeep(arrays)));
     }
-    //function unionBy(...arrays, predicate){
-    //     predicate = iteratee(predicate);
-    //     var result = [];
-
-
-    // }
+    function unionBy(...arrays){
+        let predicate = iteratee(arrays.pop());
+        let totalAry = flattenDeep(arrays);
+        let cache = [];
+        let res = [];
+        for(let item of totalAry){
+            if(!cache.includes(predicate(item))){
+                res.push(item);
+                cache.push(predicate(item));
+            }
+        }
+        return res;
+    }
     function uniq(array){
         var result = [];
         for(var item of array){
