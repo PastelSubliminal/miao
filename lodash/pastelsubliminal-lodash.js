@@ -43,7 +43,7 @@ var pastelsubliminal = function() {
             )
         return result;
     }
-    function differenceBy(array, values){
+    function differenceBy(array, values, identity){
         if(Array.isArray(values.length - 1)){
             return difference(array, ...values);
         }
