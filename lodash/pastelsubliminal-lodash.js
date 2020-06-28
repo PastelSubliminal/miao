@@ -1,6 +1,6 @@
 var pastelsubliminal = function() {
     return{
-        compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat,pad,nativeToString
+        compact, chunk, difference, differenceBy, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union,iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat,pad,nativeToString
     }
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
@@ -43,6 +43,10 @@ var pastelsubliminal = function() {
             )
         return result;
     }
+    function differenceBy(array, values, predicate){
+        predicate = iteratee(predicate);
+
+    }
     function drop(array, n=1){
         if(n >= array.length) return [];
         return array.slice(n);
@@ -52,16 +56,6 @@ var pastelsubliminal = function() {
         // return array.reverse().slice(n).reverse();
         return array.length > n ? array.slice(0, array.length - n) : [];
     }
-    // function dropRightWhile(array, predicate){
-    //     predicate = iteratee(predicate);
-    //     var result = [];
-    //     for(var i = array.length - 1; i >= 0; i--){
-    //         if(predicate(array[i]) === false){
-    //             result.push(array.slice(0, i - 1));
-    //         }
-    //     }
-    //     return result;
-    // }
     function dropRightWhile(array, predicate){
         predicate = iteratee(predicate);
         for(var i = array.length - 1; i >= 0; i--){
@@ -399,32 +393,24 @@ var pastelsubliminal = function() {
         return i == 0;
     }
     function isEqual(val, other) {
-        if (val === other) {
-          return true // 无法判断包装类型；
-        }
-        if (isNaN(val) && isNaN(other)) {
-          return true;
-        }
-        // deepcompare
-        if (isObjectLike(val) && isObjectLike(other)) {
-          let k1 = 0, k2 = 0;
-          for (let k in val) {
-            k1++;
+        if(typeof value!="object"&&typeof other!="object"){
+            return value===other?true:false;
+          }else if(typeof value=="object"&&value!="null"){
+                if(typeof other!="object"){
+                  return false;
+                }
+                var valKey=Object.keys(value);
+                var othKey=Object.keys(other);
+                if(valKey.length!=othKey.length){
+                  return false
+                }
+                for(var key in value){
+                  if(!isEqual(value[key],other[key])){
+                    return false;
+                  }
+                }
+                return true;
           }
-          for (let k in other) {
-            k2++;
-          }
-          if (k1 !== k2) {
-            return false;
-          }
-          for (let k in val) {
-            if (!isEqual(val[k], other[k])) {
-              return false;
-            }
-          }
-          return true;
-        }
-        return false;
       }
     //function isError(value){
 
@@ -571,20 +557,17 @@ var pastelsubliminal = function() {
      * @param {Array|String} path 要获取属性的路径。
      * @param {*} defaultValue 如果解析值是 undefined ，这值会被返回。
      */
-    function get(obj, path, defaultVal) {
-        if (isString(path)) {
-          path = toPath(path);
-        }
-        for (let i = 0; i < path.length; i++) {
-          if (obj == undefined) {
-            return defaultVal;
-          }
-          obj = obj[path[i]];
-        }
-        if (obj == undefined) {
-          return defaultVal;
-        }
-        return obj;
+    function get(obj, path, defaultValue) {
+        if(typeof path=="string"){
+            path = toPath(path);
+         }
+         for(var i=0;i<path.length;i++){
+            if(obj==undefined){
+              return defaultValue
+            }
+             obj=obj[path[i]]
+         }
+         return obj
       }
     /*
         例子：
@@ -809,7 +792,7 @@ var pastelsubliminal = function() {
             predicate = property(predicate);
           }
           if(typeof predicate === "array"){
-            predicate = matchesProperty(predicate[0], predicate[1]);
+            predicate = matchesProperty(...predicate);
           }
           if(typeof predicate === "object"){
             predicate = matches(predicate);
