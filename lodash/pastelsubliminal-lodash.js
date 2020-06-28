@@ -398,26 +398,27 @@ var pastelsubliminal = function() {
         }
         return i == 0;
     }
-    function isEqual(value, other) {
-        if (value === other) {
+    function isEqual(val, other) {
+        if (val === other) {
+          return true // 无法判断包装类型；
+        }
+        if (isNaN(val) && isNaN(other)) {
           return true;
         }
-        // NaN == NaN为false
-        if (isNaN(value) && isNaN(other)) {
-          return true;
-        }
-        if (isObjectLike(value) && isObjectLike(other)) {
-          let keys1 = Object.keys(value);
-          let keys2 = Object.keys(other);
-          if (keys1.length !== keys2.length) {
+        // deepcompare
+        if (isObjectLike(val) && isObjectLike(other)) {
+          let k1 = 0, k2 = 0;
+          for (let k in val) {
+            k1++;
+          }
+          for (let k in other) {
+            k2++;
+          }
+          if (k1 !== k2) {
             return false;
           }
-          for (const key of keys1) {
-            if (other[key] !== undefined) {
-              if (isEqual(value[key], other[key]) === false) {
-                return false;
-              }
-            } else {
+          for (let k in val) {
+            if (!isEqual(val[k], other[k])) {
               return false;
             }
           }
@@ -467,7 +468,7 @@ var pastelsubliminal = function() {
         return value === null;
     }
     function isNumber(value){
-        return typeof value === 'number' || (isObjectLike(value) && nativeToString(value) === '[object Number]');
+        return typeof value == "number" || (isObjectLike(value) && nativeToString(value) == "[object Number]");
     }
     function nativeToString(value) {
         return Object.prototype.toString.call(value);
@@ -570,21 +571,20 @@ var pastelsubliminal = function() {
      * @param {Array|String} path 要获取属性的路径。
      * @param {*} defaultValue 如果解析值是 undefined ，这值会被返回。
      */
-    function get(object, path, defaultValue = undefined) {
-        let pathArr;
-        // path可能为数组或者字符串
-        if (isArray(path)) {
-          pathArr = path.slice()
-        } else {
-          pathArr = toPath(path);
+    function get(obj, path, defaultVal) {
+        if (isString(path)) {
+          path = toPath(path);
         }
-        for (key of pathArr) {
-          if (object === undefined) {
-            return defaultValue;
+        for (let i = 0; i < path.length; i++) {
+          if (obj == undefined) {
+            return defaultVal;
           }
-          object = object[key];
+          obj = obj[path[i]];
         }
-        return object;
+        if (obj == undefined) {
+          return defaultVal;
+        }
+        return obj;
       }
     /*
         例子：
@@ -732,10 +732,7 @@ var pastelsubliminal = function() {
         return args[0];
     }
     function isObjectLike(value) {
-        if (typeof value === 'object' && value !== null) {
-          return true;
-        }
-        return false;
+        return typeof val == "object" && val !== null;
       }
     /**
      * 创建一个返回给定对象的 path 的值的函数。
@@ -792,11 +789,10 @@ var pastelsubliminal = function() {
      * @param {Array|string} ary
      * @returns {Function} 返回新的函数
      */
-    function matchesProperty(path, value){
+    function matchesProperty(path, val){
         return function (obj) {
-        let func = property(path);
-        return isEqual(func(obj), value);
-        }
+            return isEqual(get(obj, path), val);
+          }
     }
     /*
         例子：
