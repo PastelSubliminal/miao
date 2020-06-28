@@ -732,9 +732,9 @@ var pastelsubliminal = function() {
      * @param {String} str
      * @returns {Function} 返回的新函数
      */
-    function property(str){
+    function property(path){
         return function(obj){
-        return get(obj, str);
+        return get(obj, path);
         }
     }
     /*
