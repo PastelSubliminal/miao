@@ -398,26 +398,33 @@ var pastelsubliminal = function() {
         }
         return i == 0;
     }
-    function isEqual(value, other){
-        if(value === other){
-            return true
+    function isEqual(value, other) {
+        if (value === other) {
+          return true;
         }
-        if(isNaN(value) && isNaN(other)){
-            return true
+        // NaN == NaN为false
+        if (isNaN(value) && isNaN(other)) {
+          return true;
         }
         if (isObjectLike(value) && isObjectLike(other)) {
-            if(value.length !== other.length){
-                return false
-            }
-            for (let k in value) {
-              if (!isEqual(value[k], other[k])) {
+          let keys1 = Object.keys(value);
+          let keys2 = Object.keys(other);
+          if (keys1.length !== keys2.length) {
+            return false;
+          }
+          for (const key of keys1) {
+            if (other[key] !== undefined) {
+              if (isEqual(value[key], other[key]) === false) {
                 return false;
               }
+            } else {
+              return false;
             }
-            return true;
+          }
+          return true;
         }
-        return false
-    }
+        return false;
+      }
     //function isError(value){
 
     // }
@@ -776,8 +783,9 @@ var pastelsubliminal = function() {
      * @returns {Function} 返回新的函数
      */
     function matchesProperty(path, value){
-        return function(obj){
-            return isEqual(get(obj, path), value)
+        return function (obj) {
+        let func = property(path);
+        return isEqual(func(obj), value);
         }
     }
     /*
@@ -795,7 +803,7 @@ var pastelsubliminal = function() {
             predicate = property(predicate);
           }
           if(typeof predicate === "array"){
-            predicate = matchesProperty(predicate[0], predicate[1])
+            predicate = matchesProperty(predicate[0], predicate[1]);
           }
           if(typeof predicate === "object"){
             predicate = matches(predicate);
