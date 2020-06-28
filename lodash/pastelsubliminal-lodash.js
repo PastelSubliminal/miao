@@ -791,7 +791,7 @@ var pastelsubliminal = function() {
         if(typeof predicate === "string"){
             predicate = property(predicate);
           }
-          if(typeof predicate === "array"){
+          if(Array.isArray(predicate)){
             predicate = matchesProperty(...predicate);
           }
           if(typeof predicate === "object"){
