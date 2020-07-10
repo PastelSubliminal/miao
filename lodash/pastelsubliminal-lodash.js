@@ -817,7 +817,14 @@ var pastelsubliminal = function() {
             predicate = property(predicate);
           }
           if(Array.isArray(predicate)){
-            predicate = matchesProperty(...predicate);
+            return function (object) {
+                for (var i = 0; i < predicate.length - 1; i += 2) {
+                    if (object[predicate[i]] !== predicate[i + 1]) {
+                        return false
+                    }
+                }
+                return true
+            }
           }
           if(typeof predicate === "object"){
             predicate = matches(predicate);
