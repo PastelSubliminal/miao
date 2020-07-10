@@ -1,6 +1,6 @@
 var pastelsubliminal = function() {
     return{
-        compact, chunk, difference, differenceBy, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union, unionBy, iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, reduce, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat,pad,nativeToString
+        compact, chunk, difference, differenceBy, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, unary, keyBy, isArray, isFinite, isNaN, isNumber, isNull,isString, isBoolean, isObjectLike, isArguments, isDate, isElement, isEmpty, isEqual, isMatch, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, last, lastIndexOf, nth, pull, sortedIndex, union, unionBy, iteratee, toPath, get,property,matchesProperty, uniq, uniqBy, zip, unzip, without, xor, find, flatMap,flatten, flatMapDepth, groupBy, map, orderBy, reduce, reduceRight, partition, reject, size, ceil, max, min, round, defaults, escape, unescape, matches, maxBy, sum, sumBy, concat, pad, nativeToString, mergeSort, toCompareFunc
     }
     /**
      * Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
@@ -248,12 +248,13 @@ var pastelsubliminal = function() {
         return array.filter((item) =>
             array.lastIndexOf(item) === array.indexOf(item));
     }
-    function zip(array){
-        var result = []
-        for(var i = 0; i < array[0].length; i++){
+    function zip(...arrays){
+        let result = [];
+        let maxLength = Math.max(...arrays.map(item => item.length));
+        for(var i = 0; i < maxLength.length; i++){
             result[i] = [];
-            for(var j  = 0; j < array.length; j++){
-                result[i][j] = array[j][i]
+            for(var j  = 0; j < arrays.length; j++){
+                result[i][j] = arrays[j][i]
             }
         }
         return result;
@@ -332,42 +333,52 @@ var pastelsubliminal = function() {
         })
         return result;
     }
-    // groupBy(collection, predicate){
-    //     predicate = iteratee(predicate);
-    //     let object = new Object;
-    //     for(let i = 0; i < collection.length; i++){
-    //         if(object[iteratee(collection[i])]){
-    //             object[iteratee(collection[i])].push(collection[i]);
-    //         }else{
-    //             object[iteratee(collection[i])] = [collection[i]];
-    //         }
-    //     }
-    //     return object;
-    // }
-    function keyBy(ary, key){
+    function keyBy(ary, predicate){
         var result = {};
-        ary.forEach(item =>{
-            result[item[key]] = item;
-        })
+        let predicate = iteratee(predicate);
+        for(let key in ary){
+            obj[predicate(ary[i])] = ary[i];
+        }
         return result;
     }
     function map(collection, transform){
         var mapped = [];
         transform = iteratee(transform)
-        for(key in collection){
-            mapped.push(transform(collection[key], key, collection))
+        for(let [k, v] of Object.entries(collection)){
+            if(!isNaN(k)){
+                k = Number(k);
+            }
+            mapped.push(transform(v, k, collection));
         }
         return mapped;
     }
-    // partition(collection, predicate){
+    function orderBy(collection, predicate, orders){
 
-    // }
-    // reduce(collection, predicate, accumulator){
-
-    // }
-    // reduceRight(collection, iteratee=, accumulator){
-
-    // }
+    }
+    function partition(collection, predicate){
+        let res = [[], []];
+        let predicate = iteratee(predicate);
+        for(let i = 0; i < collection.length; i++){
+            if(predicate(collection[i]) == true){
+                res[0].push(predicate[i]);
+            }else{
+                res[1].push(collection[i]);
+            }
+        }
+    }
+    function reduce(collection, predicate, accumulator){
+        for(let i in collection){
+            accumulator = predicate(accumulator, collection[i], i, collection)
+        }
+        return accumulator;
+    }
+    function reduceRight(collection, predicate){
+        predicate = iteratee(predicate);
+        for(let i = collection.length;  i > 0; i++){
+            res = predicate(res, collection[i], i)
+        }
+        return res;
+    }
     function reject(collection, predicate){
         return filter(collection, negate(predicate));
     }
@@ -873,4 +884,39 @@ var pastelsubliminal = function() {
     function spread(func, ary){
             return func(...ary);
     }
+    function merge(left, right){
+        let [l, r, res] = [0, 0, []];
+        while(l < left.length && r < right.length){
+            res.push(
+                left[l] < right[r] ? left[l++] : right[r++]
+            );
+        }
+        return res.concat(l < left.length ? left.slice(l) : right.slice(r));
+    }
+    function mergeSort(ary, length = ary.length){
+        if(length > 1){
+            //找到数组的中间位，然后分成两个小数组left和right，然后递归至left和right长度大小为1
+            const mid = Math.floor(length / 2);
+            const left = mergeSort(ary.slice(0, mid));
+            const right = mergeSort(ary.slice(mid, length));
+            ary = merge(left, right)
+        }
+        return ary;
+    }
+    function toCompareFunc(funcs, orders) {
+        return function compare(obj1, obj2) {
+          for (let i = 0; i < funcs.length; i++) {
+            let f = iteratee(funcs[i]);
+            let res1 = f(obj1);
+            let res2 = f(obj2);
+            let flag = orders[i] === "desc" ? -1 : 1;
+            if (res1 > res2) {
+              return flag * 1;
+            } else if (res1 < res2) {
+              return flag * -1;
+            }
+          }
+          return 0;
+        }
+      }
 }();
